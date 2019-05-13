@@ -1,0 +1,38 @@
+{
+    "generator-jhipster": {
+        "promptValues": {
+            "packageName": "br.ibict",
+            "nativeLanguage": "pt-br"
+        },
+        "jhipsterVersion": "5.8.2",
+        "applicationType": "monolith",
+        "baseName": "sbrt",
+        "packageName": "br.ibict",
+        "packageFolder": "br/ibict",
+        "serverPort": "8080",
+        "authenticationType": "jwt",
+        "cacheProvider": "ehcache",
+        "enableHibernateCache": true,
+        "websocket": false,
+        "databaseType": "sql",
+        "devDatabaseType": "h2Disk",
+        "prodDatabaseType": "postgresql",
+        "searchEngine": false,
+        "messageBroker": false,
+        "serviceDiscoveryType": "eureka",
+        "buildTool": "maven",
+        "enableSwaggerCodegen": false,
+        "jwtSecretKey": "YTU4MmM0OWE5NDFiZWZjODY3ZGI1ODZlZjJlZTdiMjE1NDg4YmEwNjgxNDQ4MDBkNTg5NzI2YzY5ZDFjYmUyMGEwMzI3YjUxMzJjNWY4OGJhNzU4MjhjY2Q2ZDNiYWI1N2ZiZmFiNDRkMjI0MWJjNTU5YWM0MzBlNjg4YzE5NTk=",
+        "clientFramework": "angularX",
+        "useSass": false,
+        "clientPackageManager": "npm",
+        "testFrameworks": [],
+        "jhiPrefix": "jhi",
+        "entitySuffix": "",
+        "dtoSuffix": "DTO",
+        "otherModules": [],
+        "enableTranslation": true,
+        "nativeLanguage": "pt-br",
+        "languages": ["pt-br"]
+    }
+}

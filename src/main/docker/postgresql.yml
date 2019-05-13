@@ -1,0 +1,11 @@
+version: '2'
+services:
+    sbrt-postgresql:
+        image: postgres:10.4
+        # volumes:
+        #     - ~/volumes/jhipster/sbrt/postgresql/:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=sbrt
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
