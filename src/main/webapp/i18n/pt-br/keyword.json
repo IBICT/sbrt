@@ -1,0 +1,22 @@
+{
+    "sbrtApp": {
+        "keyword": {
+            "home": {
+                "title": "Keywords",
+                "createLabel": "Criar novo Keyword",
+                "createOrEditLabel": "Criar ou editar Keyword"
+            },
+            "created": "Um novo Keyword foi criado com o identificador {{ param }}",
+            "updated": "Um Keyword foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Keyword foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Keyword {{ id }}?"
+            },
+            "detail": {
+                "title": "Keyword"
+            },
+            "word": "Word",
+            "answer": "Answer"
+        }
+    }
+}

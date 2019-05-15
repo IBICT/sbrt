@@ -1,0 +1,76 @@
+{
+    "name": "Person",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cpf",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "schooling",
+            "fieldType": "Schooling",
+            "fieldValues": "FUNDAMENTAL_INCOMPLETO,FUNDAMENTAL_COMPLETO,MEDIO_INCOMPLETO,MEDIO_COMPLETO,SUPERIOR_INCOMPLETO,SUPERIOR_COMPLETO"
+        },
+        {
+            "fieldName": "gender",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "number",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "complement",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "zipCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "uf",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": 2
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "legalEntity",
+            "otherEntityRelationshipName": "persons",
+            "relationshipName": "legalEntities",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "contact",
+            "otherEntityRelationshipName": "person",
+            "relationshipName": "contact"
+        }
+    ],
+    "changelogDate": "20190513104841",
+    "entityTableName": "person",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

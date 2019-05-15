@@ -1,0 +1,23 @@
+{
+    "sbrtApp": {
+        "contact": {
+            "home": {
+                "title": "Contacts",
+                "createLabel": "Criar novo Contact",
+                "createOrEditLabel": "Criar ou editar Contact"
+            },
+            "created": "Um novo Contact foi criado com o identificador {{ param }}",
+            "updated": "Um Contact foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Contact foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Contact {{ id }}?"
+            },
+            "detail": {
+                "title": "Contact"
+            },
+            "phoneNumber": "Phone Number",
+            "email": "Email",
+            "person": "Person"
+        }
+    }
+}

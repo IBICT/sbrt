@@ -1,0 +1,31 @@
+{
+    "name": "Keyword",
+    "fields": [
+        {
+            "fieldName": "word",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "answer",
+            "otherEntityRelationshipName": "keyword",
+            "relationshipName": "answer",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190513104844",
+    "entityTableName": "keyword",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

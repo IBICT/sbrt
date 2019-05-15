@@ -1,0 +1,32 @@
+{
+    "sbrtApp": {
+        "legalEntity": {
+            "home": {
+                "title": "Legal Entities",
+                "createLabel": "Criar novo Legal Entity",
+                "createOrEditLabel": "Criar ou editar Legal Entity"
+            },
+            "created": "Um novo Legal Entity foi criado com o identificador {{ param }}",
+            "updated": "Um Legal Entity foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Legal Entity foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Legal Entity {{ id }}?"
+            },
+            "detail": {
+                "title": "Legal Entity"
+            },
+            "cnpj": "Cnpj",
+            "name": "Name",
+            "address": "Address",
+            "number": "Number",
+            "complement": "Complement",
+            "city": "City",
+            "zipCode": "Zip Code",
+            "uf": "Uf",
+            "cnae": "Cnae",
+            "answer": "Answer",
+            "question": "Question",
+            "persons": "Persons"
+        }
+    }
+}

@@ -1,0 +1,82 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="sbrtApp.legalEntity.home.title">Legal Entities</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-legal-entity" [routerLink]="['/legal-entity/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="sbrtApp.legalEntity.home.createLabel">
+            Create new Legal Entity
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="legalEntities">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="cnpj"><span jhiTranslate="sbrtApp.legalEntity.cnpj">Cnpj</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="name"><span jhiTranslate="sbrtApp.legalEntity.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="address"><span jhiTranslate="sbrtApp.legalEntity.address">Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="number"><span jhiTranslate="sbrtApp.legalEntity.number">Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="complement"><span jhiTranslate="sbrtApp.legalEntity.complement">Complement</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="city"><span jhiTranslate="sbrtApp.legalEntity.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="zipCode"><span jhiTranslate="sbrtApp.legalEntity.zipCode">Zip Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="uf"><span jhiTranslate="sbrtApp.legalEntity.uf">Uf</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="cnaeId"><span jhiTranslate="sbrtApp.legalEntity.cnae">Cnae</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let legalEntity of legalEntities ;trackBy: trackId">
+                <td><a [routerLink]="['/legal-entity', legalEntity.id, 'view' ]">{{legalEntity.id}}</a></td>
+                <td>{{legalEntity.cnpj}}</td>
+                <td>{{legalEntity.name}}</td>
+                <td>{{legalEntity.address}}</td>
+                <td>{{legalEntity.number}}</td>
+                <td>{{legalEntity.complement}}</td>
+                <td>{{legalEntity.city}}</td>
+                <td>{{legalEntity.zipCode}}</td>
+                <td>{{legalEntity.uf}}</td>
+                <td>
+                    <div *ngIf="legalEntity.cnaeId">
+                        <a [routerLink]="['../cnae', legalEntity.cnaeId , 'view' ]" >{{legalEntity.cnaeId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/legal-entity', legalEntity.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/legal-entity', legalEntity.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'legal-entity', { outlets: { popup: legalEntity.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="legalEntities && legalEntities.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

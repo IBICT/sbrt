@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-keyword-heading" jhiTranslate="sbrtApp.keyword.home.createOrEditLabel">Create or edit a Keyword</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!keyword.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="keyword.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.keyword.word" for="field_word">Word</label>
+                    <input type="text" class="form-control" name="word" id="field_word"
+                        [(ngModel)]="keyword.word" maxlength="100"/>
+                    <div [hidden]="!(editForm.controls.word?.dirty && editForm.controls.word?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.word?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.keyword.answer" for="field_answer">Answer</label>
+                    <select class="form-control" id="field_answer" name="answer" [(ngModel)]="keyword.answerId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="answerOption.id" *ngFor="let answerOption of answers; trackBy: trackAnswerById">{{answerOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

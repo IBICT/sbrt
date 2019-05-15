@@ -1,0 +1,31 @@
+{
+    "name": "Contact",
+    "fields": [
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "person",
+            "otherEntityRelationshipName": "contact",
+            "relationshipName": "person",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190513104840",
+    "entityTableName": "contact",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

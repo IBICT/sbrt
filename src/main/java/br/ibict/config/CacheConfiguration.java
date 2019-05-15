@@ -41,6 +41,22 @@ public class CacheConfiguration {
             cm.createCache(br.ibict.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(br.ibict.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(br.ibict.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.LegalEntity.class.getName(), jcacheConfiguration);
+            cm.createCache(br.ibict.domain.LegalEntity.class.getName() + ".answers", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.LegalEntity.class.getName() + ".questions", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.LegalEntity.class.getName() + ".persons", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Contact.class.getName(), jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Person.class.getName(), jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Person.class.getName() + ".legalEntities", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Person.class.getName() + ".contacts", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Question.class.getName(), jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Question.class.getName() + ".answers", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Answer.class.getName(), jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Answer.class.getName() + ".keywords", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Keyword.class.getName(), jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Cnae.class.getName(), jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Cnae.class.getName() + ".answers", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Cnae.class.getName() + ".legalEntities", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

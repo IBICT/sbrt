@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="keyword">
+            <h2><span jhiTranslate="sbrtApp.keyword.detail.title">Keyword</span> {{keyword.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sbrtApp.keyword.word">Word</span></dt>
+                <dd>
+                    <span>{{keyword.word}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.keyword.answer">Answer</span></dt>
+                <dd>
+                    <div *ngIf="keyword.answerId">
+                        <a [routerLink]="['/answer', keyword.answerId, 'view']">{{keyword.answerId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/keyword', keyword.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

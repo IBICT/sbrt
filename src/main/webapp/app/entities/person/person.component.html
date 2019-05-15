@@ -1,0 +1,80 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="sbrtApp.person.home.title">People</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-person" [routerLink]="['/person/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="sbrtApp.person.home.createLabel">
+            Create new Person
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="people">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="name"><span jhiTranslate="sbrtApp.person.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="cpf"><span jhiTranslate="sbrtApp.person.cpf">Cpf</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="schooling"><span jhiTranslate="sbrtApp.person.schooling">Schooling</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="gender"><span jhiTranslate="sbrtApp.person.gender">Gender</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="city"><span jhiTranslate="sbrtApp.person.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="address"><span jhiTranslate="sbrtApp.person.address">Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="number"><span jhiTranslate="sbrtApp.person.number">Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="complement"><span jhiTranslate="sbrtApp.person.complement">Complement</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="zipCode"><span jhiTranslate="sbrtApp.person.zipCode">Zip Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="uf"><span jhiTranslate="sbrtApp.person.uf">Uf</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let person of people ;trackBy: trackId">
+                <td><a [routerLink]="['/person', person.id, 'view' ]">{{person.id}}</a></td>
+                <td>{{person.name}}</td>
+                <td>{{person.cpf}}</td>
+                <td jhiTranslate="{{'sbrtApp.Schooling.' + person.schooling}}">{{person.schooling}}</td>
+                <td>{{person.gender}}</td>
+                <td>{{person.city}}</td>
+                <td>{{person.address}}</td>
+                <td>{{person.number}}</td>
+                <td>{{person.complement}}</td>
+                <td>{{person.zipCode}}</td>
+                <td>{{person.uf}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/person', person.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/person', person.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'person', { outlets: { popup: person.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="people && people.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

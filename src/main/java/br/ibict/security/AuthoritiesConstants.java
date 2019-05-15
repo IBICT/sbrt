@@ -6,6 +6,10 @@ package br.ibict.security;
 public final class AuthoritiesConstants {
 
     public static final String ADMIN = "ROLE_ADMIN";
+    
+    public static final String MEDIATOR = "ROLE_MEDIATOR";
+
+    public static final String RESEARCHER = "ROLE_RESEARCHER";
 
     public static final String USER = "ROLE_USER";
 

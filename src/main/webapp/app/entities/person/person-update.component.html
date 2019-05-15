@@ -1,0 +1,96 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-person-heading" jhiTranslate="sbrtApp.person.home.createOrEditLabel">Create or edit a Person</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!person.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="person.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="person.name" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.cpf" for="field_cpf">Cpf</label>
+                    <input type="text" class="form-control" name="cpf" id="field_cpf"
+                        [(ngModel)]="person.cpf" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.schooling" for="field_schooling">Schooling</label>
+                    <select class="form-control" name="schooling" [(ngModel)]="person.schooling" id="field_schooling" >
+                        <option value="FUNDAMENTAL_INCOMPLETO">{{'sbrtApp.Schooling.FUNDAMENTAL_INCOMPLETO' | translate}}</option>
+                        <option value="FUNDAMENTAL_COMPLETO">{{'sbrtApp.Schooling.FUNDAMENTAL_COMPLETO' | translate}}</option>
+                        <option value="MEDIO_INCOMPLETO">{{'sbrtApp.Schooling.MEDIO_INCOMPLETO' | translate}}</option>
+                        <option value="MEDIO_COMPLETO">{{'sbrtApp.Schooling.MEDIO_COMPLETO' | translate}}</option>
+                        <option value="SUPERIOR_INCOMPLETO">{{'sbrtApp.Schooling.SUPERIOR_INCOMPLETO' | translate}}</option>
+                        <option value="SUPERIOR_COMPLETO">{{'sbrtApp.Schooling.SUPERIOR_COMPLETO' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.gender" for="field_gender">Gender</label>
+                    <input type="number" class="form-control" name="gender" id="field_gender"
+                        [(ngModel)]="person.gender" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.city" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                        [(ngModel)]="person.city" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.address" for="field_address">Address</label>
+                    <input type="text" class="form-control" name="address" id="field_address"
+                        [(ngModel)]="person.address" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.number" for="field_number">Number</label>
+                    <input type="number" class="form-control" name="number" id="field_number"
+                        [(ngModel)]="person.number" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.complement" for="field_complement">Complement</label>
+                    <input type="text" class="form-control" name="complement" id="field_complement"
+                        [(ngModel)]="person.complement" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.zipCode" for="field_zipCode">Zip Code</label>
+                    <input type="text" class="form-control" name="zipCode" id="field_zipCode"
+                        [(ngModel)]="person.zipCode" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sbrtApp.person.uf" for="field_uf">Uf</label>
+                    <input type="text" class="form-control" name="uf" id="field_uf"
+                        [(ngModel)]="person.uf" required maxlength="2"/>
+                    <div [hidden]="!(editForm.controls.uf?.dirty && editForm.controls.uf?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.uf?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.uf?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 2 }">
+                        This field cannot be longer than 2 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label jhiTranslate="sbrtApp.person.legalEntities" for="field_legalEntities">Legal Entities</label>
+                    <select class="form-control" id="field_legalEntities" multiple name="legalEntities" [(ngModel)]="person.legalEntities">
+                        <option [ngValue]="getSelected(person.legalEntities, legalEntityOption)" *ngFor="let legalEntityOption of legalentities; trackBy: trackLegalEntityById">{{legalEntityOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

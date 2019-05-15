@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="legalEntity">
+            <h2><span jhiTranslate="sbrtApp.legalEntity.detail.title">Legal Entity</span> {{legalEntity.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sbrtApp.legalEntity.cnpj">Cnpj</span></dt>
+                <dd>
+                    <span>{{legalEntity.cnpj}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.legalEntity.name">Name</span></dt>
+                <dd>
+                    <span>{{legalEntity.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.legalEntity.address">Address</span></dt>
+                <dd>
+                    <span>{{legalEntity.address}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.legalEntity.number">Number</span></dt>
+                <dd>
+                    <span>{{legalEntity.number}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.legalEntity.complement">Complement</span></dt>
+                <dd>
+                    <span>{{legalEntity.complement}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.legalEntity.city">City</span></dt>
+                <dd>
+                    <span>{{legalEntity.city}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.legalEntity.zipCode">Zip Code</span></dt>
+                <dd>
+                    <span>{{legalEntity.zipCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.legalEntity.uf">Uf</span></dt>
+                <dd>
+                    <span>{{legalEntity.uf}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.legalEntity.cnae">Cnae</span></dt>
+                <dd>
+                    <div *ngIf="legalEntity.cnaeId">
+                        <a [routerLink]="['/cnae', legalEntity.cnaeId, 'view']">{{legalEntity.cnaeId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/legal-entity', legalEntity.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+{
+    "name": "Cnae",
+    "fields": [
+        {
+            "fieldName": "level",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "cod",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "answer",
+            "otherEntityRelationshipName": "cnae",
+            "relationshipName": "answer"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "legalEntity",
+            "otherEntityRelationshipName": "cnae",
+            "relationshipName": "legalEntity"
+        }
+    ],
+    "changelogDate": "20190513104845",
+    "entityTableName": "cnae",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

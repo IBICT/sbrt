@@ -1,0 +1,32 @@
+{
+    "sbrtApp": {
+        "person": {
+            "home": {
+                "title": "People",
+                "createLabel": "Criar novo Person",
+                "createOrEditLabel": "Criar ou editar Person"
+            },
+            "created": "Um novo Person foi criado com o identificador {{ param }}",
+            "updated": "Um Person foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Person foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Person {{ id }}?"
+            },
+            "detail": {
+                "title": "Person"
+            },
+            "name": "Name",
+            "cpf": "Cpf",
+            "schooling": "Schooling",
+            "gender": "Gender",
+            "city": "City",
+            "address": "Address",
+            "number": "Number",
+            "complement": "Complement",
+            "zipCode": "Zip Code",
+            "uf": "Uf",
+            "legalEntities": "Legal Entities",
+            "contact": "Contact"
+        }
+    }
+}

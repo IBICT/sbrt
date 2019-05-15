@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="person">
+            <h2><span jhiTranslate="sbrtApp.person.detail.title">Person</span> {{person.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sbrtApp.person.name">Name</span></dt>
+                <dd>
+                    <span>{{person.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.cpf">Cpf</span></dt>
+                <dd>
+                    <span>{{person.cpf}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.schooling">Schooling</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'sbrtApp.Schooling.' + person.schooling}}">{{person.schooling}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.gender">Gender</span></dt>
+                <dd>
+                    <span>{{person.gender}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.city">City</span></dt>
+                <dd>
+                    <span>{{person.city}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.address">Address</span></dt>
+                <dd>
+                    <span>{{person.address}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.number">Number</span></dt>
+                <dd>
+                    <span>{{person.number}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.complement">Complement</span></dt>
+                <dd>
+                    <span>{{person.complement}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.zipCode">Zip Code</span></dt>
+                <dd>
+                    <span>{{person.zipCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.uf">Uf</span></dt>
+                <dd>
+                    <span>{{person.uf}}</span>
+                </dd>
+                <dt><span jhiTranslate="sbrtApp.person.legalEntities">Legal Entities</span></dt>
+                <dd>
+                    <span *ngFor="let legalEntities of person.legalEntities; let last = last">
+                        <a [routerLink]="['/legal-entity', legalEntities?.id, 'view' ]">{{legalEntities.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/person', person.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
