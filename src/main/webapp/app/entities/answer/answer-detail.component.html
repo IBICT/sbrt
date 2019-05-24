@@ -17,10 +17,6 @@
                 <dd>
                     <span>{{answer.datePublished}}</span>
                 </dd>
-                <dt><span jhiTranslate="sbrtApp.answer.content">Content</span></dt>
-                <dd>
-                    <span>{{answer.content}}</span>
-                </dd>
                 <dt><span jhiTranslate="sbrtApp.answer.timesSeen">Times Seen</span></dt>
                 <dd>
                     <span>{{answer.timesSeen}}</span>
@@ -46,6 +42,11 @@
                     <div *ngIf="answer.cnaeId">
                         <a [routerLink]="['/cnae', answer.cnaeId, 'view']">{{answer.cnaeId}}</a>
                     </div>
+                </dd>
+                <hr/>
+                <dt><span jhiTranslate="sbrtApp.answer.content">Content</span></dt>
+                <dd>
+                    <span>{{answer.content}}</span>
                 </dd>
             </dl>
 

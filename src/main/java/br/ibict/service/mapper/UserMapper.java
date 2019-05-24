@@ -1,6 +1,7 @@
 package br.ibict.service.mapper;
 
 import br.ibict.domain.Authority;
+import br.ibict.domain.Person;
 import br.ibict.domain.User;
 import br.ibict.service.dto.UserDTO;
 
@@ -49,6 +50,9 @@ public class UserMapper {
             user.setImageUrl(userDTO.getImageUrl());
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
+            Person person = new Person();
+            person.setId(userDTO.getId());
+            user.setPerson(person);
             Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
             user.setAuthorities(authorities);
             return user;

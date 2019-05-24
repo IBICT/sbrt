@@ -37,7 +37,6 @@ public interface QuestionService {
      */
     Optional<QuestionDTO> findOne(Long id);
 
-    QuestionDTO changeHandler(Long questionId, Long handlerId);
 
     /**
      * Delete the "id" question.
@@ -45,4 +44,8 @@ public interface QuestionService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    QuestionDTO changeHandler(Long questionId, Long handlerId);
+
+	Page<QuestionDTO> findAllByLegalEntity(Pageable pageable, Long legalEntityId);
 }

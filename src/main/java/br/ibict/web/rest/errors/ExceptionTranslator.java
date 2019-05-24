@@ -3,6 +3,7 @@ package br.ibict.web.rest.errors;
 import br.ibict.web.rest.util.HeaderUtil;
 
 import org.springframework.dao.ConcurrencyFailureException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;

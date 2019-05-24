@@ -63,7 +63,7 @@ public class Person implements Serializable {
     @Column(name = "uf", length = 2, nullable = false)
     private String uf;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "person_legal_entities",
                joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
@@ -263,6 +263,10 @@ public class Person implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+    public boolean representsLegalEntity(Long legalEntityId) {
+        return this.legalEntities.stream().anyMatch(l -> l.getId().equals(legalEntityId));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -297,6 +301,7 @@ public class Person implements Serializable {
             ", complement='" + getComplement() + "'" +
             ", zipCode='" + getZipCode() + "'" +
             ", uf='" + getUf() + "'" +
+            ", legalEntities='" + getLegalEntities().toString() + "'" +
             "}";
     }
 }

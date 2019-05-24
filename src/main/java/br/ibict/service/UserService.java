@@ -4,6 +4,7 @@ import br.ibict.config.Constants;
 import br.ibict.domain.Authority;
 import br.ibict.domain.User;
 import br.ibict.repository.AuthorityRepository;
+import br.ibict.repository.PersonRepository;
 import br.ibict.repository.UserRepository;
 import br.ibict.security.AuthoritiesConstants;
 import br.ibict.security.SecurityUtils;
@@ -36,6 +37,8 @@ public class UserService {
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
+    
+    private final PersonRepository personRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -43,8 +46,9 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager, PersonRepository personRepository) {
         this.userRepository = userRepository;
+        this.personRepository = personRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
@@ -150,6 +154,7 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
+        user.setPerson(personRepository.getOne(userDTO.getPersonId()));
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
                 .map(authorityRepository::findById)
@@ -207,6 +212,7 @@ public class UserService {
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
+                user.setPerson(personRepository.getOne(userDTO.getPersonId()));
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()

@@ -78,6 +78,17 @@ public class QuestionServiceImpl implements QuestionService {
             .map(questionMapper::toDto);
     }
 
+    /**
+     * Delete the question by id.
+     *
+     * @param id the id of the entity
+     */
+    @Override
+    public void delete(Long id) {
+        log.debug("Request to delete Question : {}", id);
+        questionRepository.deleteById(id);
+    }
+
     public QuestionDTO changeHandler(Long questionId, Long handlerId) {
 
         Question question = null;
@@ -95,14 +106,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     }
 
-    /**
-     * Delete the question by id.
-     *
-     * @param id the id of the entity
-     */
+
     @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Question : {}", id);
-        questionRepository.deleteById(id);
+    public Page<QuestionDTO> findAllByLegalEntity(Pageable pageable, Long legalEntityId) {
+        log.debug("Request to get all Questions for a legal entity");
+        return questionRepository.findByLegalEntityId(pageable, legalEntityId)
+            .map(questionMapper::toDto);
     }
+
 }

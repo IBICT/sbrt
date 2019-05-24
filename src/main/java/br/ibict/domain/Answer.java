@@ -220,6 +220,10 @@ public class Answer implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+    public Integer incrementSeen() {
+        return ++this.timesSeen;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

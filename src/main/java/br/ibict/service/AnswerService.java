@@ -59,4 +59,12 @@ public interface AnswerService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+
+    /**
+     * Increments the number of times this answer was seen. If not present, does nothing
+     * @param answerDTO
+     * @return the same answerDTO with the timesSeen field increased by one
+     */
+    Optional<AnswerDTO> incrementAnswerSeen(Optional<AnswerDTO> answerDTO);
 }

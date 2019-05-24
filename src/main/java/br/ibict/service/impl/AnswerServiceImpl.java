@@ -100,4 +100,15 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findByCnaeCod(pageable, cnae)
             .map(answerMapper::toDto);
     }
+
+    @Override
+    public Optional<AnswerDTO> incrementAnswerSeen(Optional<AnswerDTO> answerDTO) {
+        if (answerDTO.isPresent()) {
+            Answer answer = answerMapper.toEntity(answerDTO.get());
+            answer.incrementSeen();
+            answerRepository.save(answer);
+            answerDTO = Optional.of(answerMapper.toDto(answer));
+        }
+        return answerDTO;
+    }
 }
