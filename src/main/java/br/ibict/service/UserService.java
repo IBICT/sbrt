@@ -2,6 +2,7 @@ package br.ibict.service;
 
 import br.ibict.config.Constants;
 import br.ibict.domain.Authority;
+import br.ibict.domain.Person;
 import br.ibict.domain.User;
 import br.ibict.repository.AuthorityRepository;
 import br.ibict.repository.PersonRepository;
@@ -91,7 +92,7 @@ public class UserService {
             });
     }
 
-    public User registerUser(UserDTO userDTO, String password) {
+    public User registerUser(UserDTO userDTO, Person person, String password) {
         userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
@@ -121,6 +122,7 @@ public class UserService {
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
+        newUser.setPerson(person);
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);

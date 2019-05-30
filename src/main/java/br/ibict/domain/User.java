@@ -85,7 +85,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     private Person person;
 
     @JsonIgnore
@@ -232,7 +232,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
-            ", personId=" + (person != null ? person.getId().toString() : "null") + 
+            ", personId=" + (person != null ? String.valueOf(person.getId()) : "null") + 
             "}";
     }
 

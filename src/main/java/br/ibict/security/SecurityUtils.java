@@ -59,6 +59,41 @@ public final class SecurityUtils {
     }
 
     /**
+     * Gets the ID of the current user as an Optional, if user is authenticated
+     * @return Optional of userID
+     */
+    public static Optional<Long> getCurrentUserID() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return Optional.ofNullable(securityContext.getAuthentication())
+            .map(authentication -> ( (ExtendedUserDetails) authentication.getPrincipal() ).getUserID());
+    }
+
+    /**
+     * Gets the UF of the current user as an Optional, if user is authenticated
+     * If UF is empty/null, returns empty optional.
+     * @return Optional of UF from the user
+     */
+    public static Optional<String> getCurrentUserUF() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return Optional.ofNullable(securityContext.getAuthentication())
+            .map(authentication -> ( (ExtendedUserDetails) authentication.getPrincipal() ).getUF())
+            .filter(uf -> (uf != null && uf != ""));
+    }
+
+    /**
+     * Checks if the current user represents a specific Legal Entity.
+     *
+     * @param legalEntityID the legalEntity to check
+     * @return true if the current user represents the legalEntity, false otherwise
+     */
+    public static boolean currentUserRepresentsEntity(Long legalEntityID) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return Optional.ofNullable(securityContext.getAuthentication())
+            .map(authentication -> ( (ExtendedUserDetails) authentication.getPrincipal() ).getLegalEntitiesIDs().stream().anyMatch(l -> l == legalEntityID))
+            .orElse(false);
+    }
+
+    /**
      * If the current user has a specific authority (security role).
      * <p>
      * The name of this method comes from the isUserInRole() method in the Servlet API

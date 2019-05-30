@@ -48,15 +48,23 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     }
 
-    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, User user) {
+    private ExtendedUserDetails createSpringSecurityUser(String lowercaseLogin, User user) {
         if (!user.getActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
             .map(authority -> new SimpleGrantedAuthority(authority.getName()))
             .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getLogin(),
+        ExtendedUserDetails extendedUserDetails = new ExtendedUserDetails(user.getLogin(),
             user.getPassword(),
             grantedAuthorities);
+        extendedUserDetails.setUserID(user.getId());
+
+        if(user.getPerson() != null) {
+            extendedUserDetails.setUF(user.getPerson().getUf());
+            extendedUserDetails.setLegalEntitiesIDs(user.getPerson().getLegalEntities().stream().map(le -> le.getId()).collect(Collectors.toList()));
+        }
+
+        return extendedUserDetails;
     }
 }

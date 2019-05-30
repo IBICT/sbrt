@@ -169,19 +169,20 @@ public class AnswerResource {
      * @param legalEntityId
      */
     private void assureAuthorizedOrFail(Long legalEntityId) {
-            if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return;
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN))
+            return;
 
-            Optional<String> usernameOpt = SecurityUtils.getCurrentUserLogin();
-            if(!usernameOpt.isPresent()) 
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You must be logged in to access this resource");
-            
-            String username = usernameOpt.get();
-            Optional<User> userOpt = userService.getUserWithAuthoritiesByLogin(username);
-            if(!userOpt.isPresent()) 
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You must be logged in to access this resource");
+        Optional<String> usernameOpt = SecurityUtils.getCurrentUserLogin();
+        if (!usernameOpt.isPresent())
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You must be logged in to access this resource");
 
-            User user = userOpt.get();
-            if(user.getPerson() == null || !user.getPerson().representsLegalEntity(legalEntityId)) 
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to view this resource");
+        String username = usernameOpt.get();
+        Optional<User> userOpt = userService.getUserWithAuthoritiesByLogin(username);
+        if (!userOpt.isPresent())
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You must be logged in to access this resource");
+
+        User user = userOpt.get();
+        if (user.getPerson() == null || !user.getPerson().representsLegalEntity(legalEntityId))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to view this resource");
     }
 }

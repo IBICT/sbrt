@@ -1,4 +1,4 @@
-package br.ibict.web.rest.util;
+package br.ibict.domain.enumeration;
 
 public final class InstitutionEnum {
 

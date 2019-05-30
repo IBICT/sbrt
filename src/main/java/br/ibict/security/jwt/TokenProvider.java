@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import br.ibict.security.ExtendedUserDetails;
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -27,6 +28,12 @@ public class TokenProvider {
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
     private static final String AUTHORITIES_KEY = "auth";
+
+    private static final String USER_ID_KEY = "USER_ID_KEY";
+
+    private static final String USER_UF_KEY = "USER_UF_KEY";
+
+    private static final String USER_ENTITIES_KEY = "USER_ENTITIES_KEY";
 
     private Key key;
 
@@ -73,14 +80,37 @@ public class TokenProvider {
             validity = new Date(now + this.tokenValidityInMilliseconds);
         }
 
-        return Jwts.builder()
+        ExtendedUserDetails principal = (ExtendedUserDetails) authentication.getPrincipal();
+
+        JwtBuilder jwtBuilder = Jwts.builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
+            .claim(USER_ID_KEY, principal.getUserID());
+
+        if (principal.getUF() != ""){
+            jwtBuilder = jwtBuilder.claim(USER_UF_KEY, principal.getUF());
+        }
+
+        String entities = principal.getLegalEntitiesIDs().stream()
+            .map(l -> l.toString())
+            .collect(Collectors.joining(","));
+
+        if (entities != null && !entities.isEmpty()){
+            jwtBuilder = jwtBuilder.claim(USER_ENTITIES_KEY, entities);
+        }
+        
+        return jwtBuilder
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(validity)
             .compact();
     }
 
+    /**
+     * Get an Authentication object from the JWT token. 
+     * Gets ID, UF and legalEntities of the user from the token claims
+     * @param token
+     * @return Spring's authentication object with {@ExtendedUserDetails} as a principal 
+     */
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser()
             .setSigningKey(key)
@@ -92,7 +122,24 @@ public class TokenProvider {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        ExtendedUserDetails principal = new ExtendedUserDetails(claims.getSubject(), "", authorities);
+
+        Optional<Long> userIDopt = Optional.ofNullable((null == claims.get(USER_ID_KEY)) ? null : new Long((Integer) claims.get(USER_ID_KEY)));
+        Optional<String> ufOpt = Optional.ofNullable((String) claims.get(USER_UF_KEY));
+
+        Optional<String> entitiesOpt = Optional.ofNullable((String) claims.get(USER_ENTITIES_KEY));
+        if(entitiesOpt.isPresent() && !entitiesOpt.get().isEmpty()) {
+            List<Long> entities =
+                Arrays.stream(entitiesOpt.get().split(","))
+                    .map(Long::valueOf)
+                    .collect(Collectors.toList());
+            principal.setLegalEntitiesIDs(entities);
+        } else {
+            principal.setLegalEntitiesIDs(new LinkedList<Long>());
+        }
+
+        userIDopt.ifPresent(id -> principal.setUserID(id));
+        ufOpt.ifPresent(uf -> principal.setUF(uf));
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }

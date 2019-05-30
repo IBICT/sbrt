@@ -1,6 +1,8 @@
 package br.ibict.web.rest;
 
-
+import br.ibict.domain.Contact;
+import br.ibict.domain.LegalEntity;
+import br.ibict.domain.Person;
 import br.ibict.domain.User;
 import br.ibict.repository.UserRepository;
 import br.ibict.security.SecurityUtils;
@@ -8,6 +10,8 @@ import br.ibict.service.MailService;
 import br.ibict.service.UserService;
 import br.ibict.service.dto.PasswordChangeDTO;
 import br.ibict.service.dto.UserDTO;
+import br.ibict.service.mapper.ContactMapper;
+import br.ibict.service.mapper.LegalEntityMapper;
 import br.ibict.web.rest.errors.*;
 import br.ibict.web.rest.vm.KeyAndPasswordVM;
 import br.ibict.web.rest.vm.ManagedUserVM;
@@ -17,10 +21,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing the current user's account.
@@ -37,11 +43,19 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final LegalEntityMapper legalEntityMapper;
+
+    private final ContactMapper contactMapper;
+
+    public AccountResource(UserRepository userRepository, UserService
+                            userService, MailService mailService, LegalEntityMapper
+                            legalEntityMapper, ContactMapper contactMapper) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.legalEntityMapper = legalEntityMapper;
+        this.contactMapper = contactMapper;
     }
 
     /**
@@ -57,8 +71,13 @@ public class AccountResource {
     public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
         if (!checkPasswordLength(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
+        } 
+        if (managedUserVM.getUf() == null || managedUserVM.getUf().length() != 2) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Must have a valid UF");
         }
-        User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+
+
+        User user = userService.registerUser(managedUserVM, getPersonFromRegistration(managedUserVM), managedUserVM.getPassword());
         mailService.sendActivationEmail(user);
     }
 
@@ -175,5 +194,34 @@ public class AccountResource {
         return !StringUtils.isEmpty(password) &&
             password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
             password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
+    }
+
+    private Person getPersonFromRegistration(ManagedUserVM vm) {
+        Person person = new Person();
+        person.setUf(vm.getUf());
+        person.setSchooling(vm.getSchooling());
+        person.setCpf(vm.getCpf());
+        person.setGender(vm.getGender());
+        person.setCity(vm.getCity());
+        person.setAddress(vm.getAddress());
+        person.setNumber(vm.getNumber());
+        person.setComplement(vm.getComplement());
+        person.setZipCode(vm.getZipCode());
+        if(vm.getLegalEntities() != null){
+            Set<LegalEntity> legalEntities = null;
+            legalEntities = vm.getLegalEntities().stream().map(legalEntityMapper::toEntity).collect(Collectors.toSet());
+            person.setLegalEntities(legalEntities);
+        } else {
+            person.setLegalEntities(Collections.emptySet());
+        }
+        if(vm.getContacts() != null){
+            Set<Contact> contacts = null;
+            contacts = vm.getContacts().stream().map(contactMapper::toEntity).collect(Collectors.toSet());
+            person.setContacts(contacts);
+        } else {
+            person.setContacts(Collections.emptySet());
+        }
+
+        return person;
     }
 }

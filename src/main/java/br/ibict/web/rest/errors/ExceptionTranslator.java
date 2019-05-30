@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.server.ResponseStatusException;
 import org.zalando.problem.DefaultProblem;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ProblemBuilder;
@@ -109,5 +110,15 @@ public class ExceptionTranslator implements ProblemHandling {
             .with(MESSAGE_KEY, ErrorConstants.ERR_CONCURRENCY_FAILURE)
             .build();
         return create(ex, problem, request);
+    }
+
+    /**
+     * Ignore ResponseStatusException, let Spring handle this
+     * @param ex
+     * @param request
+     */
+    @ExceptionHandler
+    public void handleResponseStatusException(ResponseStatusException ex, NativeWebRequest request) {
+        throw ex;
     }
 }
