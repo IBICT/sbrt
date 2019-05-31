@@ -1,6 +1,7 @@
 package br.ibict.web.rest;
 
 import br.ibict.domain.Answer;
+import br.ibict.domain.AnswerSummary;
 import br.ibict.domain.User;
 import br.ibict.security.AuthoritiesConstants;
 import br.ibict.security.SecurityUtils;
@@ -108,9 +109,9 @@ public class AnswerResource {
      * @return the ResponseEntity with status 200 (OK) and the list of answers in body
      */
     @GetMapping("/answers")
-    public ResponseEntity<List<AnswerDTO>> getAllAnswers(Pageable pageable) {
+    public ResponseEntity<List<AnswerSummary>> getAllAnswers(Pageable pageable) {
         log.debug("REST request to get a page of Answers");
-        Page<AnswerDTO> page = answerService.findAll(pageable);
+        Page<AnswerSummary> page = answerService.getSummaries(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

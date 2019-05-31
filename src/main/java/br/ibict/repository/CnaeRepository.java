@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CnaeRepository extends JpaRepository<Cnae, Long> {
 
+    boolean existsByCod(String cod);
+
 }

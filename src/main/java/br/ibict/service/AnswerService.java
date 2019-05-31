@@ -1,5 +1,6 @@
 package br.ibict.service;
 
+import br.ibict.domain.AnswerSummary;
 import br.ibict.service.dto.AnswerDTO;
 
 import org.springframework.data.domain.Page;
@@ -67,4 +68,6 @@ public interface AnswerService {
      * @return the same answerDTO with the timesSeen field increased by one
      */
     Optional<AnswerDTO> incrementAnswerSeen(Optional<AnswerDTO> answerDTO);
+
+    Page<AnswerSummary> getSummaries(Pageable pageable);
 }

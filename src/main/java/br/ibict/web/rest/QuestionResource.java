@@ -63,7 +63,7 @@ public class QuestionResource {
      * POST  /questions : Create a new question.
      *
      * @param questionDTO the questionDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new questionDTO, or with status 400 (Bad Request) if the question has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the new questionDTO, or with status 400 (Bad Request) if the question already has an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/questions")

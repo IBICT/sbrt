@@ -2,6 +2,7 @@ package br.ibict.service.impl;
 
 import br.ibict.service.AnswerService;
 import br.ibict.domain.Answer;
+import br.ibict.domain.AnswerSummary;
 import br.ibict.repository.AnswerRepository;
 import br.ibict.service.dto.AnswerDTO;
 import br.ibict.service.mapper.AnswerMapper;
@@ -102,6 +103,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    @Transactional
     public Optional<AnswerDTO> incrementAnswerSeen(Optional<AnswerDTO> answerDTO) {
         if (answerDTO.isPresent()) {
             Answer answer = answerMapper.toEntity(answerDTO.get());
@@ -110,5 +112,10 @@ public class AnswerServiceImpl implements AnswerService {
             answerDTO = Optional.of(answerMapper.toDto(answer));
         }
         return answerDTO;
+    }
+
+    @Override
+    public Page<AnswerSummary> getSummaries(Pageable pageable) {
+        return answerRepository.getSummaries(pageable);
     }
 }
