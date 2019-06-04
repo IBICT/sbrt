@@ -89,17 +89,20 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Page<AnswerDTO> findAllByLegalEntity(Pageable pageable, Long legalEntityId) {
-        log.debug("Request to get all Answers from a legal entity");
-        return answerRepository.findByLegalEntityId(pageable, legalEntityId)
-            .map(answerMapper::toDto);
+    public Optional<AnswerDTO> findByQuestion(Long id) {
+        return this.answerRepository.findFirstByQuestionIdOrderByDatePublished(id).map(answerMapper::toDto);
     }
 
     @Override
-    public Page<AnswerDTO> findAllByCnae(Pageable pageable, String cnae) {
+    public Page<AnswerSummary> findAllByLegalEntity(Pageable pageable, Long legalEntityId) {
+        log.debug("Request to get all Answers from a legal entity");
+        return answerRepository.getByLegalEntityId(pageable, legalEntityId);
+    }
+
+    @Override
+    public Page<AnswerSummary> findAllByCnae(Pageable pageable, String cnae) {
         log.debug("Request to get all Answers by CNAE");
-        return answerRepository.findByCnaeCod(pageable, cnae)
-            .map(answerMapper::toDto);
+        return answerRepository.getByCnaeCod(pageable, cnae);
     }
 
     @Override

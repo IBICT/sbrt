@@ -1,0 +1,282 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="ibict (generated)" id="1559578237355-1">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-2">
+        <createTable tableName="answer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="answerPK"/>
+            </column>
+            <column name="content" type="CLOB"/>
+            <column name="date_published" type="BINARY(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="is_referential_only" type="BOOLEAN"/>
+            <column name="times_seen" type="INT"/>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cnae_id" type="BIGINT"/>
+            <column name="legal_entity_id" type="BIGINT"/>
+            <column name="question_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-3">
+        <createTable tableName="answer_answer_references">
+            <column name="original_answer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reference_answer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-4">
+        <createTable tableName="cnae">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="cnaePK"/>
+            </column>
+            <column name="cod" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="jhi_level" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-5">
+        <createTable tableName="contact">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="contactPK"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-6">
+        <createTable tableName="jhi_authority">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-7">
+        <createTable tableName="jhi_persistent_audit_event">
+            <column autoIncrement="true" name="event_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_persistent_audit_eventPK"/>
+            </column>
+            <column name="event_date" type="BINARY(255)"/>
+            <column name="event_type" type="VARCHAR(255)"/>
+            <column name="principal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-8">
+        <createTable tableName="jhi_persistent_audit_evt_data">
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-9">
+        <createTable tableName="jhi_user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_userPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="BINARY(255)"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="BINARY(255)"/>
+            <column name="activated" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activation_key" type="VARCHAR(20)"/>
+            <column name="email" type="VARCHAR(254)"/>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="image_url" type="VARCHAR(256)"/>
+            <column name="lang_key" type="VARCHAR(6)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reset_date" type="BINARY(255)"/>
+            <column name="reset_key" type="VARCHAR(20)"/>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-10">
+        <createTable tableName="jhi_user_authority">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-11">
+        <createTable tableName="keyword">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="keywordPK"/>
+            </column>
+            <column name="word" type="VARCHAR(100)"/>
+            <column name="answer_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-12">
+        <createTable tableName="legal_entity">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="legal_entityPK"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cnpj" type="VARCHAR(14)"/>
+            <column name="complement" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="jhi_number" type="INT"/>
+            <column name="uf" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="zip_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cnae_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-13">
+        <createTable tableName="person">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="personPK"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="complement" type="VARCHAR(255)"/>
+            <column name="cpf" type="VARCHAR(255)"/>
+            <column name="gender" type="INT"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="jhi_number" type="INT"/>
+            <column name="schooling" type="VARCHAR(255)"/>
+            <column name="uf" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="zip_code" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-14">
+        <createTable tableName="person_legal_entities">
+            <column name="person_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="legal_entities_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-15">
+        <createTable tableName="question">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="questionPK"/>
+            </column>
+            <column name="date_asked" type="BINARY(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="legal_entity_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-16">
+        <addPrimaryKey columnNames="original_answer_id, reference_answer_id" tableName="answer_answer_references"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-17">
+        <addPrimaryKey columnNames="event_id, name" tableName="jhi_persistent_audit_evt_data"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-18">
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-19">
+        <addPrimaryKey columnNames="person_id, legal_entities_id" tableName="person_legal_entities"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-20">
+        <addPrimaryKey columnNames="name" constraintName="jhi_authorityPK" tableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-21">
+        <addUniqueConstraint columnNames="email" constraintName="UC_JHI_USEREMAIL_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-22">
+        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-23">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-24">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-25">
+        <addForeignKeyConstraint baseColumnNames="cnae_id" baseTableName="answer" constraintName="FK3ax11mpihrle8mt5kl0iic5gx" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="cnae"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-26">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc" deferrable="false" initiallyDeferred="false" referencedColumnNames="name" referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-27">
+        <addForeignKeyConstraint baseColumnNames="question_id" baseTableName="answer" constraintName="FK8frr4bcabmmeyyu60qt7iiblo" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="question"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-28">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="person_legal_entities" constraintName="FK8wunv2oslneynwudt1wbpq5l2" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-29">
+        <addForeignKeyConstraint baseColumnNames="answer_id" baseTableName="keyword" constraintName="FKeexsh86egx5lvv55mrdstfw0e" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="answer"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-30">
+        <addForeignKeyConstraint baseColumnNames="cnae_id" baseTableName="legal_entity" constraintName="FKfcnqnta240ifq51nig5jb2al4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="cnae"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-31">
+        <addForeignKeyConstraint baseColumnNames="legal_entity_id" baseTableName="question" constraintName="FKhf9o7ynevyvmfqsxd9x07i7yy" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="legal_entity"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-32">
+        <addForeignKeyConstraint baseColumnNames="legal_entities_id" baseTableName="person_legal_entities" constraintName="FKibscj3bwd6lbamnorgdee9ejv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="legal_entity"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-33">
+        <addForeignKeyConstraint baseColumnNames="original_answer_id" baseTableName="answer_answer_references" constraintName="FKiudc8v19c16ljrpgtcynsjth7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="answer"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-34">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="contact" constraintName="FKjbcdaayhsa4dhcuc5q0kkw8et" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-35">
+        <addForeignKeyConstraint baseColumnNames="reference_answer_id" baseTableName="answer_answer_references" constraintName="FKohykj9cuhh83gvajm75rin5pb" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="answer"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-36">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="answer" constraintName="FKpt5nm9lm7lr62sbxlsqa0qj3l" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-37">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="jhi_user" constraintName="FKsvq6cpn1nkxb751gb2n13vu0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-38">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="question" constraintName="FKte8y2hawrdcglvid95n28huql" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="ibict (generated)" id="1559578237355-39">
+        <addForeignKeyConstraint baseColumnNames="legal_entity_id" baseTableName="answer" constraintName="FKw8negmh94r0g1y22c51apua8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="legal_entity"/>
+    </changeSet>
+</databaseChangeLog>

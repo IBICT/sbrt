@@ -58,11 +58,18 @@ public class AnswerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/answers")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.RESEARCHER + "\")")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.RESEARCHER + "\") " +
+    " OR hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<AnswerDTO> createAnswer(@Valid @RequestBody AnswerDTO answerDTO) throws URISyntaxException {
         log.debug("REST request to save Answer : {}", answerDTO);
+        if(this.answerService.findByQuestion(answerDTO.getQuestionId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There already is an answer to this question.");
+        }
 
         assureAuthorizedOrFail(answerDTO.getLegalEntityId());
+
+        answerDTO.setDatePublished(Instant.now());
+        answerDTO.setTimesSeen(new Integer(0));
 
         if (answerDTO.getId() != null) {
             throw new BadRequestAlertException("A new answer cannot already have an ID", ENTITY_NAME, "idexists");
@@ -91,49 +98,19 @@ public class AnswerResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Optional<AnswerDTO> answerOldOpt = answerService.findOne(answerDTO.getId());
-        answerOldOpt.ifPresent(a -> this.assureAuthorizedOrFail(a.getLegalEntityId()));
-
-        answerDTO.setDatePublished(Instant.now());
-        answerDTO.setTimesSeen(new Integer(0));
+        if(answerOldOpt.isPresent()) {
+            AnswerDTO answerDTOOld = answerOldOpt.get();
+            this.assureAuthorizedOrFail(answerDTOOld.getLegalEntityId());
+            answerDTO.setDatePublished(answerDTOOld.getDatePublished());
+            answerDTO.setTimesSeen(answerDTOOld.getTimesSeen());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "error.http." + HttpStatus.NOT_FOUND.toString());
+        }
 
         AnswerDTO result = answerService.save(answerDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, answerDTO.getId().toString()))
             .body(result);
-    }
-
-    /**
-     * GET  /answers : get all the answers.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of answers in body
-     */
-    @GetMapping("/answers")
-    public ResponseEntity<List<AnswerSummary>> getAllAnswers(Pageable pageable) {
-        log.debug("REST request to get a page of Answers");
-        Page<AnswerSummary> page = answerService.getSummaries(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * GET  /answers/legalEntity/:legalEntityId : get all the answers by the id of the responsible legal entity.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of answers in body, 
-     * or with status 401 (Unauthorized) if the current user does not represent the legalEntity
-     */
-    @GetMapping("/answers/legalEntity/{legalEntityId}")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.MEDIATOR + "\") or hasRole(\"" + 
-            AuthoritiesConstants.ADMIN + "\") or hasRole(\"" + AuthoritiesConstants.RESEARCHER + "\")")
-    public ResponseEntity<List<AnswerDTO>> getAllAnswersFromLegalEntity(Pageable pageable, @PathVariable Long legalEntityId) {
-        log.debug("REST request to get a page of Answers from a legal entity");
-
-        assureAuthorizedOrFail(legalEntityId);
-            
-        Page<AnswerDTO> page = answerService.findAllByLegalEntity(pageable, legalEntityId);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -162,6 +139,68 @@ public class AnswerResource {
         log.debug("REST request to delete Answer : {}", id);
         answerService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /answers : get all the answers.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of answers in body
+     */
+    @GetMapping("/answers")
+    public ResponseEntity<List<AnswerSummary>> getAllAnswers(Pageable pageable) {
+        log.debug("REST request to get a page of Answers");
+        Page<AnswerSummary> page = answerService.getSummaries(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * GET  /answers/question/:id : get the answer regarding question "id".
+     *
+     * @param id the id of the question to retrieve the answer
+     * @return the ResponseEntity with status 200 (OK) and with body the answerDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/answers/question/{id}")
+    public ResponseEntity<AnswerDTO> getAnswerByQuestionId(@PathVariable Long id) {
+        log.debug("REST request to get Answer for Question: {}", id);
+        Optional<AnswerDTO> answerDTO = answerService.findByQuestion(id);
+        return ResponseUtil.wrapOrNotFound(answerDTO);
+    }
+
+    /**
+     * GET  /answers/legalEntity/:legalEntityId : get all the answers by the id of the responsible legal entity.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of answers in body, 
+     * or with status 401 (Unauthorized) if the current user does not represent the legalEntity
+     */
+    @GetMapping("/answers/legalEntity/{legalEntityId}")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.MEDIATOR + "\") or hasRole(\"" + 
+            AuthoritiesConstants.ADMIN + "\") or hasRole(\"" + AuthoritiesConstants.RESEARCHER + "\")")
+    public ResponseEntity<List<AnswerSummary>> getAllAnswersFromLegalEntity(Pageable pageable, @PathVariable Long legalEntityId) {
+        log.debug("REST request to get a page of Answers from a legal entity");
+
+        assureAuthorizedOrFail(legalEntityId);
+            
+        Page<AnswerSummary> page = answerService.findAllByLegalEntity(pageable, legalEntityId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * GET  /answers/cnae/:cod : get all the answers by CNAE
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of answers in body 
+     */
+    @GetMapping("/answers/cnae/{cod}")
+    public ResponseEntity<List<AnswerSummary>> getAllAnswersByCnae(Pageable pageable, @PathVariable String cod) {
+        log.debug("REST request to get a page of Answers from a legal entity");
+
+        Page<AnswerSummary> page = answerService.findAllByCnae(pageable, cod);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

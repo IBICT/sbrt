@@ -49,6 +49,9 @@ public class Answer implements Serializable {
     @Column(name = "times_seen")
     private Integer timesSeen;
 
+    @Column(name = "is_referential_only")
+    private Boolean isReferentialOnly;
+
     @ManyToOne
     @JsonIgnoreProperties("answers")
     private User user;
@@ -68,6 +71,15 @@ public class Answer implements Serializable {
     @OneToMany(mappedBy = "answer")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Keyword> keywords = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "answer_answer_references",
+        joinColumns = {@JoinColumn(name = "original_answer_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "reference_answer_id", referencedColumnName = "id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Answer> references = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -218,6 +230,22 @@ public class Answer implements Serializable {
     public void setKeywords(Set<Keyword> keywords) {
         this.keywords = keywords;
     }
+
+    public Boolean getIsReferentialOnly() {
+        return isReferentialOnly;
+    }
+
+    public void setIsReferentialOnly(Boolean isReferentialOnly) {
+        this.isReferentialOnly = isReferentialOnly;
+    }
+
+    public Set<Answer> getReferences() {
+        return references;
+    }
+
+    public void setReferences(Set<Answer> references) {
+        this.references = references;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     public Integer incrementSeen() {
@@ -255,4 +283,5 @@ public class Answer implements Serializable {
             ", timesSeen=" + getTimesSeen() +
             "}";
     }
+
 }

@@ -53,6 +53,7 @@ public class CacheConfiguration {
             cm.createCache(br.ibict.domain.Question.class.getName() + ".answers", jcacheConfiguration);
             cm.createCache(br.ibict.domain.Answer.class.getName(), jcacheConfiguration);
             cm.createCache(br.ibict.domain.Answer.class.getName() + ".keywords", jcacheConfiguration);
+            cm.createCache(br.ibict.domain.Answer.class.getName() + ".references", jcacheConfiguration);
             cm.createCache(br.ibict.domain.Keyword.class.getName(), jcacheConfiguration);
             cm.createCache(br.ibict.domain.Cnae.class.getName(), jcacheConfiguration);
             cm.createCache(br.ibict.domain.Cnae.class.getName() + ".answers", jcacheConfiguration);

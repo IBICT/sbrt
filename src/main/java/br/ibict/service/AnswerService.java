@@ -36,7 +36,7 @@ public interface AnswerService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<AnswerDTO> findAllByLegalEntity(Pageable pageable, Long legalEntityId);
+    Page<AnswerSummary> findAllByLegalEntity(Pageable pageable, Long legalEntityId);
 
     /**
      * Get all the answers by cnae
@@ -44,7 +44,7 @@ public interface AnswerService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<AnswerDTO> findAllByCnae(Pageable pageable, String cnae);
+    Page<AnswerSummary> findAllByCnae(Pageable pageable, String cnae);
 
     /**
      * Get the "id" answer.
@@ -60,6 +60,14 @@ public interface AnswerService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     * Get the answer regarding question "id".
+     *
+     * @param id the id of the question
+     * @return the entity
+     */
+    Optional<AnswerDTO> findByQuestion(Long id);
 
 
     /**

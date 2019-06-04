@@ -1,8 +1,12 @@
 package br.ibict.service.dto;
+
 import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 import javax.persistence.Lob;
 
 /**
@@ -26,6 +30,7 @@ public class AnswerDTO implements Serializable {
     @Min(value = 0)
     private Integer timesSeen;
 
+    private Boolean isReferentialOnly = Boolean.FALSE;
 
     private Long userId;
 
@@ -34,6 +39,9 @@ public class AnswerDTO implements Serializable {
     private Long legalEntityId;
 
     private Long cnaeId;
+
+    // IDs of answers referenced
+    private Set<Long> references = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -113,6 +121,22 @@ public class AnswerDTO implements Serializable {
 
     public void setCnaeId(Long cnaeId) {
         this.cnaeId = cnaeId;
+    }
+
+    public Boolean getIsReferentialOnly() {
+        return isReferentialOnly;
+    }
+
+    public void setIsReferentialOnly(Boolean isReferentialOnly) {
+        this.isReferentialOnly = isReferentialOnly;
+    }
+
+    public Set<Long> getReferences() {
+        return references;
+    }
+
+    public void setReferences(Set<Long> references) {
+        this.references = references;
     }
 
     @Override
