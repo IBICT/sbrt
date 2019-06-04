@@ -114,4 +114,10 @@ public class QuestionServiceImpl implements QuestionService {
             .map(questionMapper::toDto);
     }
 
+    @Override
+	public Page<QuestionDTO> findByUser(Long id, Pageable pageable) {
+        return this.questionRepository.findByUserId(id, pageable).map(questionMapper::toDto);
+
+    }
+
 }

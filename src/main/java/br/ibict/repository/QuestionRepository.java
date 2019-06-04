@@ -22,4 +22,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
 	Page<Question> findByLegalEntityId(Pageable pageable, Long legalEntityId);
 
+	Page<Question> findByUserId(Long id, Pageable pageable);
+
 }

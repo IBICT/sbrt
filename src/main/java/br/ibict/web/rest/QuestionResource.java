@@ -119,7 +119,7 @@ public class QuestionResource {
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "error.http." + HttpStatus.NOT_FOUND.value()));
 
         if(!SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
-            Long id = SecurityUtils.getCurrentUserID().orElseThrow(  () -> new
+            Long id = SecurityUtils.getCurrentUserID().orElseThrow( () -> new
                         ResponseStatusException(HttpStatus.UNAUTHORIZED, "error.http." + HttpStatus.UNAUTHORIZED.value()));
             if(!oldQuestionDTO.getUserId().equals(id)) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "error.http." + HttpStatus.UNAUTHORIZED.value());
@@ -147,6 +147,29 @@ public class QuestionResource {
     public ResponseEntity<List<QuestionDTO>> getAllQuestions(Pageable pageable) {
         log.debug("REST request to get a page of Questions");
         Page<QuestionDTO> page = questionService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/questions");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * GET  /questions : get all the questions.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of questions in body
+     */
+    @GetMapping("/questions/user/{id}")
+    public ResponseEntity<List<QuestionDTO>> getAllUserQuestions(@PathVariable Long id, Pageable pageable) {
+        log.debug("REST request to get a page of Questions from user");
+
+        if(!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            Long uid = SecurityUtils.getCurrentUserID().orElseThrow( () -> new
+                        ResponseStatusException(HttpStatus.UNAUTHORIZED, "You must be logged in to access this resource"));
+            if(!uid.equals(id)) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to access this resource");
+            }
+
+        }
+        Page<QuestionDTO> page = questionService.findByUser(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/questions");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

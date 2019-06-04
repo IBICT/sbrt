@@ -48,4 +48,6 @@ public interface QuestionService {
     QuestionDTO changeHandler(Long questionId, Long handlerId);
 
 	Page<QuestionDTO> findAllByLegalEntity(Pageable pageable, Long legalEntityId);
+
+	Page<QuestionDTO> findByUser(Long id, Pageable pageable);
 }
