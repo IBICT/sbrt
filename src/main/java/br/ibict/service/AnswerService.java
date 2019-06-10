@@ -78,4 +78,7 @@ public interface AnswerService {
     Optional<AnswerDTO> incrementAnswerSeen(Optional<AnswerDTO> answerDTO);
 
     Page<AnswerSummary> getSummaries(Pageable pageable);
+
+    void rateAnswer(Short rating, Long userID, Long answerID);
+
 }

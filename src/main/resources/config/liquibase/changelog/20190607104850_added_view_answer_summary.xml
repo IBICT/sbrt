@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added view for answer summaries
+    -->
+    <changeSet id="20190607104849-1" author="jhipster">
+        <createView 
+            replaceIfExists="true"
+            viewName="v_answer_summary">
+            select answer.id, title, answer.description, date_published, times_seen, question_id, legal_entity_id, cnae.cod as cnae_cod, AVG(user_answer_rating.rating) as rating
+                from answer
+                inner join user_answer_rating on answer.id = user_answer_rating.answer_id 
+                inner join cnae on answer.cnae_id = cnae.id
+            where is_referential_only = false
+            group by answer.id
+            order by date_published desc
+        </createView>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

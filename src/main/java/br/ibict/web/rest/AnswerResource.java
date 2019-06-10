@@ -1,6 +1,5 @@
 package br.ibict.web.rest;
 
-import br.ibict.domain.Answer;
 import br.ibict.domain.AnswerSummary;
 import br.ibict.domain.User;
 import br.ibict.security.AuthoritiesConstants;
@@ -201,6 +200,14 @@ public class AnswerResource {
         Page<AnswerSummary> page = answerService.findAllByCnae(pageable, cod);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @PostMapping("/answers/{answerId}/rate")
+    public ResponseEntity<Void> rateAnswer(@RequestBody Short rating, @PathVariable Long answerId) {
+        Long userId = SecurityUtils.getCurrentUserID().orElseThrow( () -> 
+                new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You must be logged in to access this resource"));
+        this.answerService.rateAnswer(rating, userId, answerId);
+        return ResponseEntity.ok().build();
     }
 
     /**

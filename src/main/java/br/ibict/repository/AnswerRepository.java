@@ -24,26 +24,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     Optional<Answer> findFirstByQuestionIdOrderByDatePublished(Long questionId);
 
-    @Query("select new br.ibict.domain.AnswerSummary(a.id, a.title, a.description, a.datePublished," + 
-    " a.timesSeen, a.question.id, a.legalEntity.id) from Answer a "
-    + "where a.legalEntity.id = :id "
-    + "and a.isReferentialOnly = false")
-    Page<AnswerSummary> getByLegalEntityId(Pageable pageable, @Param("id") Long id);
-
-    @Query("select new br.ibict.domain.AnswerSummary(a.id, a.title, a.description, a.datePublished," + 
-    " a.timesSeen, a.question.id, a.legalEntity.id) from Answer a "
-    + "left join a.cnae c "
-    + "where c.cod = :cod "
-    + "and a.isReferentialOnly = false")
-    Page<AnswerSummary> getByCnaeCod(Pageable pageable, @Param("cod") String cod);
 
     @Query("select answer from Answer answer where answer.user.login = ?#{principal.username}")
     List<Answer> findByUserIsCurrentUser();
-
-    @Query("select new br.ibict.domain.AnswerSummary(a.id, a.title, a.description, a.datePublished," + 
-    " a.timesSeen, a.question.id, a.legalEntity.id) from Answer a "
-    + "where a.isReferentialOnly = false")
-    Page<AnswerSummary> getSummaries(Pageable pageable);
 
     @Query("select new br.ibict.service.dto.AnswerStatisticsDTO(a.timesSeen, a.datePublished, q.dateAsked) from Answer a left join a.question q where a.id = :id")
     AnswerStatisticsDTO getStatisticsByID(@Param("id") Long id);
