@@ -11,6 +11,8 @@ import br.ibict.service.MailService;
 import br.ibict.service.UserService;
 import br.ibict.service.dto.PasswordChangeDTO;
 import br.ibict.service.dto.UserDTO;
+import br.ibict.service.mapper.ContactMapper;
+import br.ibict.service.mapper.LegalEntityMapper;
 import br.ibict.web.rest.errors.ExceptionTranslator;
 import br.ibict.web.rest.vm.KeyAndPasswordVM;
 import br.ibict.web.rest.vm.ManagedUserVM;
@@ -68,6 +70,12 @@ public class AccountResourceIntTest {
 
     @Autowired
     private ExceptionTranslator exceptionTranslator;
+    
+    @Autowired
+    private LegalEntityMapper legalEntityMapper;
+
+    @Autowired
+    private ContactMapper contactMapper;
 
     @Mock
     private UserService mockUserService;
@@ -84,10 +92,10 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService);
+            new AccountResource(userRepository, userService, mockMailService, legalEntityMapper, contactMapper);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService);
+            new AccountResource(userRepository, mockUserService, mockMailService, legalEntityMapper, contactMapper);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)

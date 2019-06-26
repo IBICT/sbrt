@@ -5,6 +5,7 @@ import br.ibict.SbrtApp;
 import br.ibict.domain.Answer;
 import br.ibict.repository.AnswerRepository;
 import br.ibict.service.AnswerService;
+import br.ibict.service.UserService;
 import br.ibict.service.dto.AnswerDTO;
 import br.ibict.service.mapper.AnswerMapper;
 import br.ibict.web.rest.errors.ExceptionTranslator;
@@ -84,6 +85,9 @@ public class AnswerResourceIntTest {
 
     @Autowired
     private Validator validator;
+    
+    @Autowired
+    private UserService userService;
 
     private MockMvc restAnswerMockMvc;
 
@@ -92,7 +96,7 @@ public class AnswerResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AnswerResource answerResource = new AnswerResource(answerService);
+        final AnswerResource answerResource = new AnswerResource(answerService, userService);
         this.restAnswerMockMvc = MockMvcBuilders.standaloneSetup(answerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
