@@ -23,7 +23,6 @@ export class QuestionUpdateComponent implements OnInit {
     users: IUser[];
 
     legalentities: ILegalEntity[];
-    dateAsked: string;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -37,7 +36,6 @@ export class QuestionUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ question }) => {
             this.question = question;
-            this.dateAsked = this.question.dateAsked != null ? this.question.dateAsked.format(DATE_TIME_FORMAT) : null;
         });
         this.userService
             .query()
@@ -61,7 +59,6 @@ export class QuestionUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.question.dateAsked = this.dateAsked != null ? moment(this.dateAsked, DATE_TIME_FORMAT) : null;
         if (this.question.id !== undefined) {
             this.subscribeToSaveResponse(this.questionService.update(this.question));
         } else {

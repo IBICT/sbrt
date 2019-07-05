@@ -2,31 +2,31 @@
     "sbrtApp": {
         "legalEntity": {
             "home": {
-                "title": "Legal Entities",
-                "createLabel": "Criar novo Legal Entity",
-                "createOrEditLabel": "Criar ou editar Legal Entity"
+                "title": "Entidades Legais",
+                "createLabel": "Criar novo Entidade Legal",
+                "createOrEditLabel": "Criar ou editar Entidade Legal"
             },
-            "created": "Um novo Legal Entity foi criado com o identificador {{ param }}",
-            "updated": "Um Legal Entity foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Legal Entity foi deletado com o identificador {{ param }}",
+            "created": "Uma nova Entidade Legal foi criada com o identificador {{ param }}",
+            "updated": "Uma Entidade Legal foi atualizada com o identificador {{ param }}",
+            "deleted": "Uma Entidade Legal foi deletada com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Legal Entity {{ id }}?"
+                "question": "Tem certeza de que deseja excluir a Entidade Legal {{ id }}?"
             },
             "detail": {
-                "title": "Legal Entity"
+                "title": "Entidade Legal"
             },
-            "cnpj": "Cnpj",
-            "name": "Name",
-            "address": "Address",
-            "number": "Number",
-            "complement": "Complement",
-            "city": "City",
-            "zipCode": "Zip Code",
-            "uf": "Uf",
-            "cnae": "Cnae",
-            "answer": "Answer",
-            "question": "Question",
-            "persons": "Persons"
+            "cnpj": "CNPJ",
+            "name": "Nome",
+            "address": "Endereço",
+            "number": "Número",
+            "complement": "Complemento",
+            "city": "Cidade",
+            "zipCode": "CEP",
+            "uf": "UF",
+            "cnae": "CNAE",
+            "answer": "Resposta",
+            "question": "Pergunta",
+            "persons": "Pessoas"
         }
     }
 }

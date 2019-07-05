@@ -2,21 +2,21 @@
     "sbrtApp": {
         "keyword": {
             "home": {
-                "title": "Keywords",
-                "createLabel": "Criar novo Keyword",
-                "createOrEditLabel": "Criar ou editar Keyword"
+                "title": "Palavras-Chave",
+                "createLabel": "Criar nova Palavra-Chave",
+                "createOrEditLabel": "Criar ou editar Palavra-Chave"
             },
-            "created": "Um novo Keyword foi criado com o identificador {{ param }}",
-            "updated": "Um Keyword foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Keyword foi deletado com o identificador {{ param }}",
+            "created": "Uma nova Palavra-Chave foi criada com o identificador {{ param }}",
+            "updated": "Uma Palavra-Chave foi atualizada com o identificador {{ param }}",
+            "deleted": "Uma Palavra-Chave foi deletada com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Keyword {{ id }}?"
+                "question": "Tem certeza de que deseja excluir a Palavra-Chave {{ id }}?"
             },
             "detail": {
-                "title": "Keyword"
+                "title": "Palavra-Chave"
             },
-            "word": "Word",
-            "answer": "Answer"
+            "word": "Palavra",
+            "answer": "Resposta"
         }
     }
 }

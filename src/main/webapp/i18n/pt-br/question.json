@@ -2,25 +2,25 @@
     "sbrtApp": {
         "question": {
             "home": {
-                "title": "Questions",
-                "createLabel": "Criar novo Question",
-                "createOrEditLabel": "Criar ou editar Question"
+                "title": "Perguntas",
+                "createLabel": "Criar novo Pergunta",
+                "createOrEditLabel": "Criar ou editar Pergunta"
             },
-            "created": "Um novo Question foi criado com o identificador {{ param }}",
-            "updated": "Um Question foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Question foi deletado com o identificador {{ param }}",
+            "created": "Uma nova Pergunta foi criada com o identificador {{ param }}",
+            "updated": "Uma Pergunta foi atualizada com o identificador {{ param }}",
+            "deleted": "Uma Pergunta foi deletada com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Question {{ id }}?"
+                "question": "Tem certeza de que deseja excluir a Pergunta {{ id }}?"
             },
             "detail": {
-                "title": "Question"
+                "title": "Pergunta"
             },
-            "title": "Title",
-            "description": "Description",
-            "dateAsked": "Date Asked",
-            "user": "User",
-            "legalEntity": "Legal Entity",
-            "answer": "Answer"
+            "title": "Título",
+            "description": "Pergunta",
+            "dateAsked": "Data da Pergunta",
+            "user": "Usuário",
+            "legalEntity": "Entidade Legal",
+            "answer": "Resposta"
         }
     }
 }

@@ -25,38 +25,6 @@
                     <input type="text" class="form-control" name="description" id="field_description"
                         [(ngModel)]="question.description" />
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sbrtApp.question.dateAsked" for="field_dateAsked">Date Asked</label>
-                    <div class="d-flex">
-                        <input id="field_dateAsked" type="datetime-local" class="form-control" name="dateAsked" [(ngModel)]="dateAsked" placeholder="YYYY-MM-DD HH:mm"
-                        required/>
-                    </div>
-                    <div [hidden]="!(editForm.controls.dateAsked?.dirty && editForm.controls.dateAsked?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.dateAsked?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.dateAsked?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sbrtApp.question.user" for="field_user">User</label>
-                    <select class="form-control" id="field_user" name="user" [(ngModel)]="question.userId" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sbrtApp.question.legalEntity" for="field_legalEntity">Legal Entity</label>
-                    <select class="form-control" id="field_legalEntity" name="legalEntity" [(ngModel)]="question.legalEntityId" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="legalEntityOption.id" *ngFor="let legalEntityOption of legalentities; trackBy: trackLegalEntityById">{{legalEntityOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

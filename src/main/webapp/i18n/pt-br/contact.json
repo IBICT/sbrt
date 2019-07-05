@@ -3,21 +3,21 @@
         "contact": {
             "home": {
                 "title": "Contacts",
-                "createLabel": "Criar novo Contact",
-                "createOrEditLabel": "Criar ou editar Contact"
+                "createLabel": "Criar novo Contato",
+                "createOrEditLabel": "Criar ou editar Contato"
             },
-            "created": "Um novo Contact foi criado com o identificador {{ param }}",
-            "updated": "Um Contact foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Contact foi deletado com o identificador {{ param }}",
+            "created": "Um novo Contato foi criado com o identificador {{ param }}",
+            "updated": "Um Contato foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Contato foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Contact {{ id }}?"
+                "question": "Tem certeza de que deseja excluir o Contato {{ id }}?"
             },
             "detail": {
-                "title": "Contact"
+                "title": "Contato"
             },
-            "phoneNumber": "Phone Number",
+            "phoneNumber": "Telefone",
             "email": "Email",
-            "person": "Person"
+            "person": "Pessoa"
         }
     }
 }

@@ -7,13 +7,13 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entidades",
-                "legalEntity": "Legal Entity",
-                "contact": "Contact",
-                "person": "Person",
-                "question": "Question",
-                "answer": "Answer",
-                "keyword": "Keyword",
-                "cnae": "Cnae",
+                "legalEntity": "Entidades Legais",
+                "contact": "Contatos",
+                "person": "Pessoas",
+                "question": "Perguntas",
+                "answer": "Respostas",
+                "keyword": "Palavras-Chave",
+                "cnae": "CNAE",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

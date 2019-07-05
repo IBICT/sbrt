@@ -21,7 +21,6 @@ public class AnswerDTO implements Serializable {
 
     private String description;
 
-    @NotNull
     private Instant datePublished;
 
     @Lob

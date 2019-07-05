@@ -16,9 +16,7 @@ public class QuestionDTO implements Serializable {
 
     private String description;
 
-    @NotNull
     private Instant dateAsked;
-
 
     private Long userId;
 

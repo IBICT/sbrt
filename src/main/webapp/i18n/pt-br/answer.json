@@ -2,29 +2,29 @@
     "sbrtApp": {
         "answer": {
             "home": {
-                "title": "Answers",
-                "createLabel": "Criar novo Answer",
-                "createOrEditLabel": "Criar ou editar Answer"
+                "title": "Respostas",
+                "createLabel": "Criar nova Resposta",
+                "createOrEditLabel": "Criar ou editar Resposta"
             },
-            "created": "Um novo Answer foi criado com o identificador {{ param }}",
-            "updated": "Um Answer foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Answer foi deletado com o identificador {{ param }}",
+            "created": "Uma nova Resposta foi criada com o identificador {{ param }}",
+            "updated": "Uma Resposta foi atualizada com o identificador {{ param }}",
+            "deleted": "Uma Resposta foi deletada com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Answer {{ id }}?"
+                "question": "Tem certeza de que deseja excluir a Resposta {{ id }}?"
             },
             "detail": {
-                "title": "Answer"
+                "title": "Resposta"
             },
-            "title": "Title",
-            "description": "Description",
-            "datePublished": "Date Published",
-            "content": "Content",
-            "timesSeen": "Times Seen",
-            "user": "User",
-            "question": "Question",
-            "legalEntity": "Legal Entity",
-            "cnae": "Cnae",
-            "keyword": "Keyword"
+            "title": "Título",
+            "description": "Descrição",
+            "datePublished": "Data de Publicação",
+            "content": "Conteúdo",
+            "timesSeen": "Visualizações",
+            "user": "Usuário",
+            "question": "Questão",
+            "legalEntity": "Entidade Legal",
+            "cnae": "CNAE",
+            "keyword": "Palavra-Chave"
         }
     }
 }

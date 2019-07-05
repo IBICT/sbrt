@@ -31,7 +31,6 @@ export class AnswerUpdateComponent implements OnInit {
     legalentities: ILegalEntity[];
 
     cnaes: ICnae[];
-    datePublished: string;
 
     constructor(
         protected dataUtils: JhiDataUtils,
@@ -48,7 +47,6 @@ export class AnswerUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ answer }) => {
             this.answer = answer;
-            this.datePublished = this.answer.datePublished != null ? this.answer.datePublished.format(DATE_TIME_FORMAT) : null;
         });
         this.userService
             .query()
@@ -98,7 +96,6 @@ export class AnswerUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.answer.datePublished = this.datePublished != null ? moment(this.datePublished, DATE_TIME_FORMAT) : null;
         if (this.answer.id !== undefined) {
             this.subscribeToSaveResponse(this.answerService.update(this.answer));
         } else {

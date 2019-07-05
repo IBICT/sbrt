@@ -2,24 +2,24 @@
     "sbrtApp": {
         "cnae": {
             "home": {
-                "title": "Cnaes",
-                "createLabel": "Criar novo Cnae",
-                "createOrEditLabel": "Criar ou editar Cnae"
+                "title": "CNAES",
+                "createLabel": "Criar novo CNAE",
+                "createOrEditLabel": "Criar ou editar CNAE"
             },
-            "created": "Um novo Cnae foi criado com o identificador {{ param }}",
-            "updated": "Um Cnae foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Cnae foi deletado com o identificador {{ param }}",
+            "created": "Um novo CNAE foi criado com o identificador {{ param }}",
+            "updated": "Um CNAE foi atualizado com o identificador {{ param }}",
+            "deleted": "Um CNAE foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Cnae {{ id }}?"
+                "question": "Tem certeza de que deseja excluir O CNAE {{ id }}?"
             },
             "detail": {
-                "title": "Cnae"
+                "title": "CNAE"
             },
-            "level": "Level",
-            "cod": "Cod",
-            "description": "Description",
-            "answer": "Answer",
-            "legalEntity": "Legal Entity"
+            "level": "Nível",
+            "cod": "Código",
+            "description": "Descrição",
+            "answer": "Resposta",
+            "legalEntity": "Entidade Legal"
         }
     }
 }
