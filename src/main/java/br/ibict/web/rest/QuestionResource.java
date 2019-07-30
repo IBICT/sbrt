@@ -1,5 +1,6 @@
 package br.ibict.web.rest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
@@ -10,6 +11,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -26,8 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.ibict.domain.LegalEntity;
 import br.ibict.domain.User;
 import br.ibict.domain.enumeration.InstitutionEnum;
+import br.ibict.repository.LegalEntityRepository;
 import br.ibict.security.AuthoritiesConstants;
 import br.ibict.security.SecurityUtils;
 import br.ibict.service.QuestionService;
@@ -53,6 +57,9 @@ public class QuestionResource {
     private final QuestionService questionService;
 
     private final UserService userService;
+
+    @Autowired
+    private LegalEntityRepository legalEntityRepository;
 
     public QuestionResource(QuestionService questionService, UserService userService) {
         this.questionService = questionService;
@@ -268,12 +275,15 @@ public class QuestionResource {
 
     // TODO handle errors, add other institutions
     private QuestionDTO setRouteQuestion(String uf, QuestionDTO questionDTO) throws InvalidUFException {
-        switch (uf) {
-            case "DF":
-                questionDTO.setLegalEntityId(InstitutionEnum.UNB);
-                return questionDTO;
-            default:
-                throw new InvalidUFException();
-        }
+        Long legalEntityId = legalEntityRepository.findFirstByOrderByIdAsc().getId();
+        questionDTO.setLegalEntityId(legalEntityId);
+        return questionDTO;
+        // switch (uf) {
+        //     case "DF":
+        //         questionDTO.setLegalEntityId(InstitutionEnum.UNB);
+        //         return questionDTO;
+        //     default:
+        //         throw new InvalidUFException();
+        // }
     }
 }
