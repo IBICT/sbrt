@@ -1,6 +1,6 @@
 package br.ibict.service;
 
-import br.ibict.domain.AnswerSummary;
+import br.ibict.domain.Answer;
 import br.ibict.service.dto.AnswerDTO;
 
 import org.springframework.data.domain.Page;
@@ -36,7 +36,7 @@ public interface AnswerService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<AnswerSummary> findAllByLegalEntity(Pageable pageable, Long legalEntityId);
+    Page<Answer> findAllByLegalEntity(Pageable pageable, Long legalEntityId);
 
     /**
      * Get all the answers by cnae
@@ -44,7 +44,7 @@ public interface AnswerService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<AnswerSummary> findAllByCnae(Pageable pageable, String cnae);
+    Page<Answer> findAllByCnae(Pageable pageable, String cnae);
 
     /**
      * Get the "id" answer.
@@ -77,7 +77,7 @@ public interface AnswerService {
      */
     Optional<AnswerDTO> incrementAnswerSeen(Optional<AnswerDTO> answerDTO);
 
-    Page<AnswerSummary> getSummaries(Pageable pageable);
+    Page<Answer> getSummaries(Pageable pageable);
 
     void rateAnswer(Short rating, Long userID, Long answerID);
 

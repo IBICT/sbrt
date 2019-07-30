@@ -2,11 +2,9 @@ package br.ibict.service.impl;
 
 import br.ibict.service.AnswerService;
 import br.ibict.domain.Answer;
-import br.ibict.domain.AnswerSummary;
 import br.ibict.domain.IDUserAnswerRating;
 import br.ibict.domain.UserAnswerRating;
 import br.ibict.repository.AnswerRepository;
-import br.ibict.repository.AnswerSummaryRepository;
 import br.ibict.repository.UserAnswerRatingRepository;
 import br.ibict.service.dto.AnswerDTO;
 import br.ibict.service.mapper.AnswerMapper;
@@ -31,15 +29,12 @@ public class AnswerServiceImpl implements AnswerService {
 
     private final AnswerRepository answerRepository;
 
-    private final AnswerSummaryRepository answerSummaryRepository;
-
     private final AnswerMapper answerMapper;
 
     private final UserAnswerRatingRepository userAnswerRatingRepository;
 
-    public AnswerServiceImpl(AnswerRepository answerRepository, AnswerSummaryRepository answerSummaryRepository, AnswerMapper answerMapper, UserAnswerRatingRepository userAnswerRatingRepository) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, AnswerMapper answerMapper, UserAnswerRatingRepository userAnswerRatingRepository) {
         this.answerRepository = answerRepository;
-        this.answerSummaryRepository = answerSummaryRepository;
         this.answerMapper = answerMapper;
         this.userAnswerRatingRepository = userAnswerRatingRepository;
     }
@@ -104,15 +99,15 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Page<AnswerSummary> findAllByLegalEntity(Pageable pageable, Long legalEntityId) {
+    public Page<Answer> findAllByLegalEntity(Pageable pageable, Long legalEntityId) {
         log.debug("Request to get all Answers from a legal entity");
-        return answerSummaryRepository.findByLegalEntityId(pageable, legalEntityId);
+        return answerRepository.findByLegalEntityId(pageable, legalEntityId);
     }
 
     @Override
-    public Page<AnswerSummary> findAllByCnae(Pageable pageable, String cnae) {
+    public Page<Answer> findAllByCnae(Pageable pageable, String cnae) {
         log.debug("Request to get all Answers by CNAE");
-        return answerSummaryRepository.getByCnaeCod(pageable, cnae);
+        return answerRepository.getByCnaeCod(pageable, cnae);
     }
 
     @Override
@@ -128,8 +123,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Page<AnswerSummary> getSummaries(Pageable pageable) {
-        return answerSummaryRepository.findAll(pageable);
+    public Page<Answer> getSummaries(Pageable pageable) {
+        return answerRepository.findAll(pageable);
     }
 
     @Override

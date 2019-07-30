@@ -1,7 +1,6 @@
 package br.ibict.repository;
 
 import br.ibict.domain.Answer;
-import br.ibict.domain.AnswerSummary;
 import br.ibict.service.dto.AccumulatedStatisticsDTO;
 import br.ibict.service.dto.AnswerStatisticsDTO;
 import br.ibict.service.dto.GeneralStatisticsDTO;
@@ -24,6 +23,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     Optional<Answer> findFirstByQuestionIdOrderByDatePublished(Long questionId);
 
+    Page<Answer> findByLegalEntityId(Pageable pageable, Long legalEntityId);
+
+    Page<Answer> getByCnaeCod(Pageable pageable, String cod);
 
     @Query("select answer from Answer answer where answer.user.login = ?#{principal.username}")
     List<Answer> findByUserIsCurrentUser();

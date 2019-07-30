@@ -1,6 +1,6 @@
 package br.ibict.web.rest;
 
-import br.ibict.domain.AnswerSummary;
+import br.ibict.domain.Answer;
 import br.ibict.domain.User;
 import br.ibict.security.AuthoritiesConstants;
 import br.ibict.security.SecurityUtils;
@@ -147,9 +147,9 @@ public class AnswerResource {
      * @return the ResponseEntity with status 200 (OK) and the list of answers in body
      */
     @GetMapping("/answers")
-    public ResponseEntity<List<AnswerSummary>> getAllAnswers(Pageable pageable) {
+    public ResponseEntity<List<Answer>> getAllAnswers(Pageable pageable) {
         log.debug("REST request to get a page of Answers");
-        Page<AnswerSummary> page = answerService.getSummaries(pageable);
+        Page<Answer> page = answerService.getSummaries(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -177,12 +177,12 @@ public class AnswerResource {
     @GetMapping("/answers/legalEntity/{legalEntityId}")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.MEDIATOR + "\") or hasRole(\"" + 
             AuthoritiesConstants.ADMIN + "\") or hasRole(\"" + AuthoritiesConstants.RESEARCHER + "\")")
-    public ResponseEntity<List<AnswerSummary>> getAllAnswersFromLegalEntity(Pageable pageable, @PathVariable Long legalEntityId) {
+    public ResponseEntity<List<Answer>> getAllAnswersFromLegalEntity(Pageable pageable, @PathVariable Long legalEntityId) {
         log.debug("REST request to get a page of Answers from a legal entity");
 
         assureAuthorizedOrFail(legalEntityId);
             
-        Page<AnswerSummary> page = answerService.findAllByLegalEntity(pageable, legalEntityId);
+        Page<Answer> page = answerService.findAllByLegalEntity(pageable, legalEntityId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -194,10 +194,10 @@ public class AnswerResource {
      * @return the ResponseEntity with status 200 (OK) and the list of answers in body 
      */
     @GetMapping("/answers/cnae/{cod}")
-    public ResponseEntity<List<AnswerSummary>> getAllAnswersByCnae(Pageable pageable, @PathVariable String cod) {
+    public ResponseEntity<List<Answer>> getAllAnswersByCnae(Pageable pageable, @PathVariable String cod) {
         log.debug("REST request to get a page of Answers from a legal entity");
 
-        Page<AnswerSummary> page = answerService.findAllByCnae(pageable, cod);
+        Page<Answer> page = answerService.findAllByCnae(pageable, cod);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

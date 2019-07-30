@@ -37,7 +37,6 @@ spring:
     devtools:
         restart:
             enabled: true
-            additional-exclude: .h2.server.properties
         livereload:
             enabled: false # we use Webpack dev server + BrowserSync for livereload
     jackson:
@@ -45,9 +44,18 @@ spring:
             indent-output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:file:./target/h2db/db/sbrt;DB_CLOSE_DELAY=-1
-        username: sbrt
-        password:
+
+        #url: jdbc:h2:file:./target/h2db/db/sbrt;DB_CLOSE_DELAY=-1
+        url: jdbc:postgresql://localhost:5432/sbrt
+        #url: jdbc:postgresql://10.0.10.37:5432/SBRTCENTRAL?currentSchema=application
+
+        #username: sbrt
+        username: postgres
+
+        #password:
+        password: postgres
+        #password: abacaxi
+
         hikari:
             poolName: Hikari
             auto-commit: false
@@ -55,8 +63,10 @@ spring:
         console:
             enabled: false
     jpa:
-        database-platform: io.github.jhipster.domain.util.FixedH2Dialect
-        database: H2
+        database-platform: io.github.jhipster.domain.util.FixedPostgreSQL95Dialect
+        database: POSTGRESQL
+        #database-platform: io.github.jhipster.domain.util.FixedH2Dialect
+        #database: H2
         show-sql: true
         properties:
             hibernate.id.new_generator_mappings: true
