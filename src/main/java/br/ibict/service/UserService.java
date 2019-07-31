@@ -156,7 +156,10 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
-        user.setPerson(personRepository.getOne(userDTO.getPersonId()));
+        Long personId = userDTO.getPersonId();
+        if(personId != 0){
+            user.setPerson(personRepository.getOne(personId));
+        }
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
                 .map(authorityRepository::findById)
