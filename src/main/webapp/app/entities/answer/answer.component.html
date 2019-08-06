@@ -35,13 +35,11 @@
                 <td>{{answer.datePublished | date:'medium'}}</td>
                 <!-- <td>{{answer.content}}</td> -->
                 <td>{{answer.timesSeen}}</td>
+                <td>{{answer.userId}}</td>
                 <td>
-                    {{answer.userId}}
-                </td>
-                <td>
-                    <div *ngIf="answer.questionId">
+                    <!-- <div *ngIf="answer.questionId"> -->
                         <a [routerLink]="['../question', answer.questionId , 'view' ]" >{{answer.questionId}}</a>
-                    </div>
+                    <!-- </div> -->
                 </td>
                 <!-- <td>
                     <div *ngIf="answer.legalEntityId">

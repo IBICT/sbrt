@@ -22,6 +22,8 @@ public class QuestionDTO implements Serializable {
 
     private Long legalEntityId;
 
+    private String legalEntityName;
+
     public Long getId() {
         return id;
     }
@@ -68,6 +70,14 @@ public class QuestionDTO implements Serializable {
 
     public void setLegalEntityId(Long legalEntityId) {
         this.legalEntityId = legalEntityId;
+    }
+
+    public String getLegalEntityName() {
+        return legalEntityName;
+    }
+
+    public void setLegalEntityName(String legalEntityName) {
+        this.legalEntityName = legalEntityName;
     }
 
     @Override

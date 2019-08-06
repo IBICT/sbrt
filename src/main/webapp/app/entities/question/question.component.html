@@ -29,12 +29,10 @@
                 <td>{{question.title}}</td>
                 <td>{{question.description}}</td>
                 <td>{{question.dateAsked | date:'medium'}}</td>
-                <td>
-                    {{question.userId}}
-                </td>
+                <td>{{question.userId}}</td>
                 <td>
                     <div *ngIf="question.legalEntityId">
-                        <a [routerLink]="['../legal-entity', question.legalEntityId , 'view' ]" >{{question.legalEntityId}}</a>
+                        <a [routerLink]="['../legal-entity', question.legalEntityId , 'view' ]" >{{question.legalEntityName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

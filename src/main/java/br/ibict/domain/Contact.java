@@ -84,6 +84,10 @@ public class Contact implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+    public String getName(){
+        return this.person.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -110,6 +114,7 @@ public class Contact implements Serializable {
             "id=" + getId() +
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", email='" + getEmail() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

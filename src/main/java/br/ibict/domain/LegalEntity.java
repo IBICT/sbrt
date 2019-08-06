@@ -3,6 +3,10 @@ package br.ibict.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -277,6 +281,12 @@ public class LegalEntity implements Serializable {
         this.persons = people;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @JsonInclude(Include.NON_NULL)
+    @JsonProperty("cnaeDescription")
+    public String getCnaeDescription() {
+        return this.cnae.getDescription();
+    }
 
     @Override
     public boolean equals(Object o) {

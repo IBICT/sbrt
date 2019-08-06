@@ -2,7 +2,6 @@ package br.ibict.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -42,11 +41,11 @@ public class Question implements Serializable {
     private Instant dateAsked;
 
     @ManyToOne
-    @JsonIgnoreProperties("questions")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
-    @JsonIgnoreProperties("questions")
+    @JsonIgnore
     private LegalEntity legalEntity;
 
     @OneToMany(mappedBy = "question")
@@ -151,6 +150,10 @@ public class Question implements Serializable {
         this.answers = answers;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public String getLegalEntityName() {
+        return this.legalEntity.getName();
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -87,12 +87,11 @@
                         </small>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sbrtApp.legalEntity.cnae" for="field_cnae">Cnae</label>
                     <select class="form-control" id="field_cnae" name="cnae" [(ngModel)]="legalEntity.cnaeId" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="cnaeOption.id" *ngFor="let cnaeOption of cnaes; trackBy: trackCnaeById">{{cnaeOption.id}}</option>
+                        <option [ngValue]="cnaeOption.id" *ngFor="let cnaeOption of cnaes; trackBy: trackCnaeById">{{cnaeOption.description}}</option>
                     </select>
                 </div>
             </div>

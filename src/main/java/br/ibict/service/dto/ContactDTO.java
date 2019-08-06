@@ -13,8 +13,9 @@ public class ContactDTO implements Serializable {
 
     private String email;
 
-
     private Long personId;
+
+    private String name;
 
     public Long getId() {
         return id;
@@ -48,6 +49,14 @@ public class ContactDTO implements Serializable {
         this.personId = personId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -76,6 +85,7 @@ public class ContactDTO implements Serializable {
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", email='" + getEmail() + "'" +
             ", person=" + getPersonId() +
+            ", name=" + getName() +
             "}";
     }
 }

@@ -40,7 +40,7 @@
                 <td>{{legalEntity.uf}}</td>
                 <td>
                     <div *ngIf="legalEntity.cnaeId">
-                        <a [routerLink]="['../cnae', legalEntity.cnaeId , 'view' ]" >{{legalEntity.cnaeId}}</a>
+                        <a [routerLink]="['../cnae', legalEntity.cnaeId , 'view' ]" >{{legalEntity.cnaeDescription}}</a>
                     </div>
                 </td>
                 <td class="text-right">

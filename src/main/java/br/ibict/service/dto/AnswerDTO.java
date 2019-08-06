@@ -39,6 +39,8 @@ public class AnswerDTO implements Serializable {
 
     private Long cnaeId;
 
+    private String questionTitle;
+
     // IDs of answers referenced
     private Set<Long> references = new HashSet<>();
 
@@ -138,6 +140,14 @@ public class AnswerDTO implements Serializable {
         this.references = references;
     }
 
+    public String getQuestionTitle() {
+        return questionTitle;
+    }
+
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -168,10 +178,9 @@ public class AnswerDTO implements Serializable {
             ", datePublished='" + getDatePublished() + "'" +
             ", content='" + getContent() + "'" +
             ", timesSeen=" + getTimesSeen() +
-            ", user=" + getUserId() +
-            ", question=" + getQuestionId() +
-            ", legalEntity=" + getLegalEntityId() +
-            ", cnae=" + getCnaeId() +
+            ", userId=" + getUserId() +
+            ", legalEntityId=" + getLegalEntityId() +
+            ", cnaeId=" + getCnaeId() +
             "}";
     }
 }

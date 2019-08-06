@@ -2,7 +2,7 @@
     "sbrtApp": {
         "contact": {
             "home": {
-                "title": "Contacts",
+                "title": "Contatos",
                 "createLabel": "Criar novo Contato",
                 "createOrEditLabel": "Criar ou editar Contato"
             },

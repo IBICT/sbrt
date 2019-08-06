@@ -7,7 +7,13 @@
             "MEDIO_INCOMPLETO": "MEDIO_INCOMPLETO",
             "MEDIO_COMPLETO": "MEDIO_COMPLETO",
             "SUPERIOR_INCOMPLETO": "SUPERIOR_INCOMPLETO",
-            "SUPERIOR_COMPLETO": "SUPERIOR_COMPLETO"
+            "SUPERIOR_COMPLETO": "SUPERIOR_COMPLETO",
+            "Médio": "Médio",
+            "Graduação": "Graduação",
+            "Especialização": "Especialização",
+            "Fundamental": "Fundamental",
+            "Profissionalizante": "Profissionalizante",
+            "Mestrado": "Mestrado"
         }
     }
 }

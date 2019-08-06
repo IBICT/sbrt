@@ -28,7 +28,7 @@
                 <td>{{contact.email}}</td>
                 <td>
                     <div *ngIf="contact.personId">
-                        <a [routerLink]="['../person', contact.personId , 'view' ]" >{{contact.personId}}</a>
+                        <a [routerLink]="['../person', contact.personId , 'view' ]" >{{contact.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">
