@@ -27,7 +27,7 @@ import java.util.Objects;
 public class Answer implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -44,7 +44,6 @@ public class Answer implements Serializable {
     @Column(name = "date_published", nullable = false)
     private Instant datePublished;
 
-    @Lob
     @Column(name = "content")
     private String content;
 
