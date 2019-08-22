@@ -28,23 +28,6 @@ public interface AnswerService {
      * @return the list of entities
      */
     Page<AnswerDTO> findAll(Pageable pageable);
-    
-
-    /**
-     * Get all the answers from a given legal entity.
-     *
-     * @param pageable the pagination information
-     * @return the list of entities
-     */
-    Page<Answer> findAllByLegalEntity(Pageable pageable, Long legalEntityId);
-
-    /**
-     * Get all the answers by cnae
-     *
-     * @param pageable the pagination information
-     * @return the list of entities
-     */
-    Page<Answer> findAllByCnae(Pageable pageable, String cnae);
 
     /**
      * Get the "id" answer.

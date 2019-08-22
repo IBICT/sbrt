@@ -3,12 +3,19 @@ package br.ibict.web.rest;
 import br.ibict.SbrtApp;
 
 import br.ibict.domain.Answer;
+import br.ibict.domain.User;
+import br.ibict.domain.Question;
+import br.ibict.domain.LegalEntity;
+import br.ibict.domain.Cnae;
+import br.ibict.domain.Keyword;
 import br.ibict.repository.AnswerRepository;
 import br.ibict.service.AnswerService;
 import br.ibict.service.UserService;
 import br.ibict.service.dto.AnswerDTO;
 import br.ibict.service.mapper.AnswerMapper;
 import br.ibict.web.rest.errors.ExceptionTranslator;
+import br.ibict.service.dto.AnswerCriteria;
+import br.ibict.service.AnswerQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -72,6 +79,12 @@ public class AnswerResourceIntTest {
     private AnswerService answerService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AnswerQueryService answerQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -85,9 +98,6 @@ public class AnswerResourceIntTest {
 
     @Autowired
     private Validator validator;
-    
-    @Autowired
-    private UserService userService;
 
     private MockMvc restAnswerMockMvc;
 
@@ -96,7 +106,7 @@ public class AnswerResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AnswerResource answerResource = new AnswerResource(answerService, userService);
+        final AnswerResource answerResource = new AnswerResource(answerService, userService, answerQueryService);
         this.restAnswerMockMvc = MockMvcBuilders.standaloneSetup(answerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -224,7 +234,7 @@ public class AnswerResourceIntTest {
             .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
             .andExpect(jsonPath("$.[*].timesSeen").value(hasItem(DEFAULT_TIMES_SEEN)));
     }
-    
+
     @Test
     @Transactional
     public void getAnswer() throws Exception {
@@ -242,6 +252,322 @@ public class AnswerResourceIntTest {
             .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
             .andExpect(jsonPath("$.timesSeen").value(DEFAULT_TIMES_SEEN));
     }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where title equals to DEFAULT_TITLE
+        defaultAnswerShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the answerList where title equals to UPDATED_TITLE
+        defaultAnswerShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultAnswerShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the answerList where title equals to UPDATED_TITLE
+        defaultAnswerShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where title is not null
+        defaultAnswerShouldBeFound("title.specified=true");
+
+        // Get all the answerList where title is null
+        defaultAnswerShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByDescriptionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where description equals to DEFAULT_DESCRIPTION
+        defaultAnswerShouldBeFound("description.equals=" + DEFAULT_DESCRIPTION);
+
+        // Get all the answerList where description equals to UPDATED_DESCRIPTION
+        defaultAnswerShouldNotBeFound("description.equals=" + UPDATED_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByDescriptionIsInShouldWork() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where description in DEFAULT_DESCRIPTION or UPDATED_DESCRIPTION
+        defaultAnswerShouldBeFound("description.in=" + DEFAULT_DESCRIPTION + "," + UPDATED_DESCRIPTION);
+
+        // Get all the answerList where description equals to UPDATED_DESCRIPTION
+        defaultAnswerShouldNotBeFound("description.in=" + UPDATED_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByDescriptionIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where description is not null
+        defaultAnswerShouldBeFound("description.specified=true");
+
+        // Get all the answerList where description is null
+        defaultAnswerShouldNotBeFound("description.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByDatePublishedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where datePublished equals to DEFAULT_DATE_PUBLISHED
+        defaultAnswerShouldBeFound("datePublished.equals=" + DEFAULT_DATE_PUBLISHED);
+
+        // Get all the answerList where datePublished equals to UPDATED_DATE_PUBLISHED
+        defaultAnswerShouldNotBeFound("datePublished.equals=" + UPDATED_DATE_PUBLISHED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByDatePublishedIsInShouldWork() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where datePublished in DEFAULT_DATE_PUBLISHED or UPDATED_DATE_PUBLISHED
+        defaultAnswerShouldBeFound("datePublished.in=" + DEFAULT_DATE_PUBLISHED + "," + UPDATED_DATE_PUBLISHED);
+
+        // Get all the answerList where datePublished equals to UPDATED_DATE_PUBLISHED
+        defaultAnswerShouldNotBeFound("datePublished.in=" + UPDATED_DATE_PUBLISHED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByDatePublishedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where datePublished is not null
+        defaultAnswerShouldBeFound("datePublished.specified=true");
+
+        // Get all the answerList where datePublished is null
+        defaultAnswerShouldNotBeFound("datePublished.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByTimesSeenIsEqualToSomething() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where timesSeen equals to DEFAULT_TIMES_SEEN
+        defaultAnswerShouldBeFound("timesSeen.equals=" + DEFAULT_TIMES_SEEN);
+
+        // Get all the answerList where timesSeen equals to UPDATED_TIMES_SEEN
+        defaultAnswerShouldNotBeFound("timesSeen.equals=" + UPDATED_TIMES_SEEN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByTimesSeenIsInShouldWork() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where timesSeen in DEFAULT_TIMES_SEEN or UPDATED_TIMES_SEEN
+        defaultAnswerShouldBeFound("timesSeen.in=" + DEFAULT_TIMES_SEEN + "," + UPDATED_TIMES_SEEN);
+
+        // Get all the answerList where timesSeen equals to UPDATED_TIMES_SEEN
+        defaultAnswerShouldNotBeFound("timesSeen.in=" + UPDATED_TIMES_SEEN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByTimesSeenIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where timesSeen is not null
+        defaultAnswerShouldBeFound("timesSeen.specified=true");
+
+        // Get all the answerList where timesSeen is null
+        defaultAnswerShouldNotBeFound("timesSeen.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByTimesSeenIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where timesSeen greater than or equals to DEFAULT_TIMES_SEEN
+        defaultAnswerShouldBeFound("timesSeen.greaterOrEqualThan=" + DEFAULT_TIMES_SEEN);
+
+        // Get all the answerList where timesSeen greater than or equals to UPDATED_TIMES_SEEN
+        defaultAnswerShouldNotBeFound("timesSeen.greaterOrEqualThan=" + UPDATED_TIMES_SEEN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAnswersByTimesSeenIsLessThanSomething() throws Exception {
+        // Initialize the database
+        answerRepository.saveAndFlush(answer);
+
+        // Get all the answerList where timesSeen less than or equals to DEFAULT_TIMES_SEEN
+        defaultAnswerShouldNotBeFound("timesSeen.lessThan=" + DEFAULT_TIMES_SEEN);
+
+        // Get all the answerList where timesSeen less than or equals to UPDATED_TIMES_SEEN
+        defaultAnswerShouldBeFound("timesSeen.lessThan=" + UPDATED_TIMES_SEEN);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAnswersByUserIsEqualToSomething() throws Exception {
+        // Initialize the database
+        User user = UserResourceIntTest.createEntity(em);
+        em.persist(user);
+        em.flush();
+        answer.setUser(user);
+        answerRepository.saveAndFlush(answer);
+        Long userId = user.getId();
+
+        // Get all the answerList where user equals to userId
+        defaultAnswerShouldBeFound("userId.equals=" + userId);
+
+        // Get all the answerList where user equals to userId + 1
+        defaultAnswerShouldNotBeFound("userId.equals=" + (userId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAnswersByQuestionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Question question = QuestionResourceIntTest.createEntity(em);
+        em.persist(question);
+        em.flush();
+        answer.setQuestion(question);
+        answerRepository.saveAndFlush(answer);
+        Long questionId = question.getId();
+
+        // Get all the answerList where question equals to questionId
+        defaultAnswerShouldBeFound("questionId.equals=" + questionId);
+
+        // Get all the answerList where question equals to questionId + 1
+        defaultAnswerShouldNotBeFound("questionId.equals=" + (questionId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAnswersByLegalEntityIsEqualToSomething() throws Exception {
+        // Initialize the database
+        LegalEntity legalEntity = LegalEntityResourceIntTest.createEntity(em);
+        em.persist(legalEntity);
+        em.flush();
+        answer.setLegalEntity(legalEntity);
+        answerRepository.saveAndFlush(answer);
+        Long legalEntityId = legalEntity.getId();
+
+        // Get all the answerList where legalEntity equals to legalEntityId
+        defaultAnswerShouldBeFound("legalEntityId.equals=" + legalEntityId);
+
+        // Get all the answerList where legalEntity equals to legalEntityId + 1
+        defaultAnswerShouldNotBeFound("legalEntityId.equals=" + (legalEntityId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAnswersByCnaeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Cnae cnae = CnaeResourceIntTest.createEntity(em);
+        em.persist(cnae);
+        em.flush();
+        answer.setCnae(cnae);
+        answerRepository.saveAndFlush(answer);
+        Long cnaeId = cnae.getId();
+
+        // Get all the answerList where cnae equals to cnaeId
+        defaultAnswerShouldBeFound("cnaeId.equals=" + cnaeId);
+
+        // Get all the answerList where cnae equals to cnaeId + 1
+        defaultAnswerShouldNotBeFound("cnaeId.equals=" + (cnaeId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAnswersByKeywordIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Keyword keyword = KeywordResourceIntTest.createEntity(em);
+        em.persist(keyword);
+        em.flush();
+        answer.addKeyword(keyword);
+        answerRepository.saveAndFlush(answer);
+        Long keywordId = keyword.getId();
+
+        // Get all the answerList where keyword equals to keywordId
+        defaultAnswerShouldBeFound("keywordId.equals=" + keywordId);
+
+        // Get all the answerList where keyword equals to keywordId + 1
+        defaultAnswerShouldNotBeFound("keywordId.equals=" + (keywordId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultAnswerShouldBeFound(String filter) throws Exception {
+        restAnswerMockMvc.perform(get("/api/answers?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(answer.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].datePublished").value(hasItem(DEFAULT_DATE_PUBLISHED.toString())))
+            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
+            .andExpect(jsonPath("$.[*].timesSeen").value(hasItem(DEFAULT_TIMES_SEEN)));
+
+        // Check, that the count call also returns 1
+        restAnswerMockMvc.perform(get("/api/answers/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultAnswerShouldNotBeFound(String filter) throws Exception {
+        restAnswerMockMvc.perform(get("/api/answers?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restAnswerMockMvc.perform(get("/api/answers/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("0"));
+    }
+
 
     @Test
     @Transactional

@@ -99,18 +99,6 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Page<Answer> findAllByLegalEntity(Pageable pageable, Long legalEntityId) {
-        log.debug("Request to get all Answers from a legal entity");
-        return answerRepository.findByLegalEntityId(pageable, legalEntityId);
-    }
-
-    @Override
-    public Page<Answer> findAllByCnae(Pageable pageable, String cnae) {
-        log.debug("Request to get all Answers by CNAE");
-        return answerRepository.getByCnaeCod(pageable, cnae);
-    }
-
-    @Override
     @Transactional
     public Optional<AnswerDTO> incrementAnswerSeen(Optional<AnswerDTO> answerDTO) {
         if (answerDTO.isPresent()) {
