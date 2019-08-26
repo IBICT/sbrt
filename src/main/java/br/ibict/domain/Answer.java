@@ -208,6 +208,7 @@ public class Answer implements Serializable {
         this.cnae = cnae;
     }
 
+    @JsonProperty("keywords")
     public Set<Keyword> getKeywords() {
         return keywords;
     }
@@ -289,6 +290,7 @@ public class Answer implements Serializable {
             ", datePublished='" + getDatePublished() + "'" +
             ", content='" + getContent() + "'" +
             ", timesSeen=" + getTimesSeen() +
+            ", keywords=" + getKeywords() +
             "}";
     }
 

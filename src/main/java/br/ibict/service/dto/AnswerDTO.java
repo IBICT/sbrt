@@ -1,5 +1,7 @@
 package br.ibict.service.dto;
 
+import br.ibict.domain.Keyword;
+
 import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -23,7 +25,6 @@ public class AnswerDTO implements Serializable {
 
     private Instant datePublished;
 
-    @Lob
     private String content;
 
     @Min(value = 0)
@@ -43,6 +44,8 @@ public class AnswerDTO implements Serializable {
 
     // IDs of answers referenced
     private Set<Long> references = new HashSet<>();
+
+    private Set<Keyword> keywords = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -140,6 +143,14 @@ public class AnswerDTO implements Serializable {
         this.references = references;
     }
 
+    public Set<Keyword> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(Set<Keyword> keywords) {
+        this.keywords = keywords;
+    }
+
     public String getQuestionTitle() {
         return questionTitle;
     }
@@ -181,6 +192,7 @@ public class AnswerDTO implements Serializable {
             ", userId=" + getUserId() +
             ", legalEntityId=" + getLegalEntityId() +
             ", cnaeId=" + getCnaeId() +
+            ", keywords=" + getKeywords() +
             "}";
     }
 }
