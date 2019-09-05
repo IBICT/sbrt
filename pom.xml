@@ -658,6 +658,7 @@
                         <!-- see: https://issues.apache.org/jira/browse/SUREFIRE-1588 -->
                         <useSystemClassLoader>false</useSystemClassLoader>
                         <outputDirectory>${sonar.junit.reportsPath}</outputDirectory>
+                        <skipTests>true</skipTests>
                     </configuration>
                 </plugin>
                 <plugin>

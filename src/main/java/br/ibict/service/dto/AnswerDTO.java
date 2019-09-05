@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Lob;
-
 /**
  * A DTO for the Answer entity.
  */
@@ -40,7 +38,7 @@ public class AnswerDTO implements Serializable {
 
     private Long cnaeId;
 
-    private String questionTitle;
+    private String fileLink;
 
     // IDs of answers referenced
     private Set<Long> references = new HashSet<>();
@@ -127,9 +125,7 @@ public class AnswerDTO implements Serializable {
         this.cnaeId = cnaeId;
     }
 
-    public Boolean getIsReferentialOnly() {
-        return isReferentialOnly;
-    }
+    public Boolean getIsReferentialOnly() { return isReferentialOnly; }
 
     public void setIsReferentialOnly(Boolean isReferentialOnly) {
         this.isReferentialOnly = isReferentialOnly;
@@ -143,20 +139,16 @@ public class AnswerDTO implements Serializable {
         this.references = references;
     }
 
-    public Set<Keyword> getKeywords() {
-        return keywords;
+    public Set<Keyword> getKeywords() { return keywords; }
+
+    public void setKeywords(Set<Keyword> keywords) { this.keywords = keywords; }
+
+    public String getFileLink() {
+        return "about:blank";
     }
 
-    public void setKeywords(Set<Keyword> keywords) {
-        this.keywords = keywords;
-    }
-
-    public String getQuestionTitle() {
-        return questionTitle;
-    }
-
-    public void setQuestionTitle(String questionTitle) {
-        this.questionTitle = questionTitle;
+    public void setFileLink(String fileLink) {
+        this.fileLink = fileLink;
     }
 
     @Override
@@ -193,6 +185,7 @@ public class AnswerDTO implements Serializable {
             ", legalEntityId=" + getLegalEntityId() +
             ", cnaeId=" + getCnaeId() +
             ", keywords=" + getKeywords() +
+            ", fileLink=" + getFileLink() +
             "}";
     }
 }

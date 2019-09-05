@@ -40,7 +40,7 @@
                 <dt><span jhiTranslate="sbrtApp.legalEntity.cnae">Cnae</span></dt>
                 <dd>
                     <div *ngIf="legalEntity.cnaeId">
-                        <a [routerLink]="['/cnae', legalEntity.cnaeId, 'view']">{{legalEntity.cnaeDescription}}</a>
+                        <a [routerLink]="['/cnae', legalEntity.cnaeId, 'view']">{{legalEntity.cnaeId}}</a>
                     </div>
                 </dd>
             </dl>
