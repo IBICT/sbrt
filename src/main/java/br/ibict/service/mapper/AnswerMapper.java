@@ -22,6 +22,7 @@ public interface AnswerMapper extends EntityMapper<AnswerDTO, Answer> {
     @Mapping(source = "legalEntity.id", target = "legalEntityId")
     @Mapping(source = "cnae.id", target = "cnaeId")
     @Mapping(source = "references", target = "references")
+    @Mapping(source = "pdfFile", target = "pdfFile")
     AnswerDTO toDto(Answer answer);
 
     @Mapping(source = "userId", target = "user")
@@ -30,6 +31,7 @@ public interface AnswerMapper extends EntityMapper<AnswerDTO, Answer> {
     @Mapping(source = "cnaeId", target = "cnae")
     @Mapping(source = "references", target = "references")
     @Mapping(target = "keywords", ignore = true)
+    @Mapping(source = "pdfFile", target = "pdfFile")
     Answer toEntity(AnswerDTO answerDTO);
 
     default Answer fromId(Long id) {
@@ -43,7 +45,7 @@ public interface AnswerMapper extends EntityMapper<AnswerDTO, Answer> {
 
     default Set<Answer> longSetToAnswerSet(Set<Long> ids) {
         log.debug(ids.toString());
-        
+
         return ids.stream().map(i -> this.fromId(i)).collect(Collectors.toSet());
     }
 

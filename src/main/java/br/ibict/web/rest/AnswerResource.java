@@ -150,7 +150,7 @@ public class AnswerResource {
     public ResponseEntity<AnswerDTO> getAnswer(@PathVariable Long id) {
         log.debug("REST request to get Answer : {}", id);
         Optional<AnswerDTO> answerDTO = answerService.findOne(id);
-        answerDTO = answerService.incrementAnswerSeen(answerDTO);
+        //answerDTO = answerService.incrementAnswerSeen(answerDTO);
         return ResponseUtil.wrapOrNotFound(answerDTO);
     }
 

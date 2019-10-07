@@ -778,6 +778,7 @@
                                 <phase>generate-resources</phase>
                                 <configuration>
                                     <arguments>run webpack:build</arguments>
+                                    <skipTests>true</skipTests>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
                                 </configuration>
                             </execution>
@@ -933,6 +934,7 @@
                                 <phase>test</phase>
                                 <configuration>
                                     <arguments>run webpack:test</arguments>
+                                    <skipTests>true</skipTests>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
                                 </configuration>
                             </execution>
@@ -944,6 +946,7 @@
                                 <phase>generate-resources</phase>
                                 <configuration>
                                     <arguments>run webpack:prod</arguments>
+                                    <skipTests>true</skipTests>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
                                 </configuration>
                             </execution>

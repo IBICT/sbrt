@@ -38,12 +38,12 @@ public class AnswerDTO implements Serializable {
 
     private Long cnaeId;
 
-    private String fileLink;
-
     // IDs of answers referenced
     private Set<Long> references = new HashSet<>();
 
     private Set<Keyword> keywords = new HashSet<>();
+
+    private String pdfFile;
 
     public Long getId() {
         return id;
@@ -143,12 +143,12 @@ public class AnswerDTO implements Serializable {
 
     public void setKeywords(Set<Keyword> keywords) { this.keywords = keywords; }
 
-    public String getFileLink() {
-        return "about:blank";
+    public String getPdfFile() {
+        return pdfFile;
     }
 
-    public void setFileLink(String fileLink) {
-        this.fileLink = fileLink;
+    public void setPdfFile(String pdfFile) {
+        this.pdfFile = pdfFile;
     }
 
     @Override
@@ -185,7 +185,7 @@ public class AnswerDTO implements Serializable {
             ", legalEntityId=" + getLegalEntityId() +
             ", cnaeId=" + getCnaeId() +
             ", keywords=" + getKeywords() +
-            ", fileLink=" + getFileLink() +
+            ", pdfFile=" + getPdfFile() +
             "}";
     }
 }

@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -53,6 +54,9 @@ public class Answer implements Serializable {
 
     @Column(name = "is_referential_only")
     private Boolean isReferentialOnly;
+
+    @Column(name = "pdf_file", columnDefinition="BLOB")
+    private byte[] pdfFile;
 
     @ManyToOne
     @JsonIgnore
@@ -208,6 +212,16 @@ public class Answer implements Serializable {
         this.cnae = cnae;
     }
 
+    public String getPdfFile() {
+        byte[] encodedBytes = Base64.getEncoder().encode(pdfFile);
+        return new String(encodedBytes) ;
+    }
+
+    public void setPdfFile(String encodedData){
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedData.getBytes());
+        this.pdfFile = decodedBytes;
+    }
+
     @JsonProperty("keywords")
     public Set<Keyword> getKeywords() {
         return keywords;
@@ -261,6 +275,7 @@ public class Answer implements Serializable {
         return this.user.getId();
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -291,6 +306,7 @@ public class Answer implements Serializable {
             ", content='" + getContent() + "'" +
             ", timesSeen=" + getTimesSeen() +
             ", keywords=" + getKeywords() +
+            ", pdfFile=" + getPdfFile() +
             "}";
     }
 
