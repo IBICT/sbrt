@@ -1,6 +1,7 @@
 package br.ibict.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.criteria.JoinType;
 
@@ -51,7 +52,7 @@ public class AnswerQueryService extends QueryService<Answer> {
     public List<AnswerDTO> findByCriteria(AnswerCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Answer> specification = createSpecification(criteria);
-        return answerMapper.toDto(answerRepository.findAll(specification));
+        return answerMapper.toDto(answerRepository.findAll(specification).stream().map(x -> {x.setPdfFile(""); return x;}).collect(Collectors.toList()));
     }
 
     /**
@@ -64,7 +65,7 @@ public class AnswerQueryService extends QueryService<Answer> {
     public Page<AnswerDTO> findByCriteria(AnswerCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Answer> specification = createSpecification(criteria);
-        return answerRepository.findAll(specification, page)
+        return answerRepository.findAll(specification, page).map(x -> {x.setPdfFile(""); return x;})
             .map(answerMapper::toDto);
     }
 
